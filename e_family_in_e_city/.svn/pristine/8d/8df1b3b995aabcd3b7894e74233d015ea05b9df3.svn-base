@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <!-- <h2 style="font-weight: 400">用户查询</h2> -->
+    <div id='app'>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+            <span>旧表计信息</span>
+        </div>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">房产编号:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="oldWatch.houseNum" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">地址:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="oldWatch.adress" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">置换状态:</span>
+                        <div class="inputBox"> 
+                            <el-select disabled v-model="oldWatch.replaceState" placeholder="请选择">
+                                <el-option
+                                    v-for="item in oldWatch.replaceStates"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+            </el-row>       
+        </div>
+        <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">表针编号:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="oldWatch.needleNum" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">物料号:</span>
+                        <div class="inputBox">
+                            <el-input v-model="oldWatch.materialNum" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">型号:</span>
+                        <div class="inputBox">
+                            <el-input v-model="oldWatch.model" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">生产日期:</span>
+                        <div class="inputBox">
+                            <el-date-picker v-model="oldWatch.buildDate" type="date" placeholder="选择日期"></el-date-picker>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">用气类型:</span>
+                        <div class="inputBox">
+                            <el-input v-model="oldWatch.gasType" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">表钢号:</span>
+                        <div class="inputBox">
+                            <el-input v-model="oldWatch.tableSteelNumbe" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">安装日期:</span>
+                        <div class="inputBox">
+                            <el-date-picker v-model="oldWatch.installDate" type="date" placeholder="选择日期"></el-date-picker>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">安装位置:</span>
+                        <div class="inputBox">
+                            <el-select v-model="oldWatch.installPosition" placeholder="请选择">
+                                <el-option
+                                    v-for="item in oldWatch.installPositions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">户内外标识:</span>
+                        <div class="inputBox">
+                            <el-select v-model="oldWatch.identification" placeholder="请选择">
+                                <el-option
+                                    v-for="item in oldWatch.identifications"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">安装状态:</span>
+                        <div class="inputBox">
+                            <el-select v-model="oldWatch.inatallState" placeholder="请选择">
+                                <el-option
+                                    v-for="item in oldWatch.inatallStates"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">保修开始日期:</span>
+                        <div class="inputBox">
+                            <el-date-picker v-model="oldWatch.warrantyStartDate" type="date" placeholder="选择日期"></el-date-picker> 
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">保修结束日期:</span>
+                        <div class="inputBox">
+                            <el-date-picker v-model="oldWatch.warrantyEndDate" type="date" placeholder="选择日期"></el-date-picker> 
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">读表单元:</span>
+                        <div class="inputBox">
+                            <el-select v-model="oldWatch.baseTableRead" placeholder="请选择">
+                                <el-option
+                                    v-for="item in oldWatch.baseTableReads"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">公司代码:</span>
+                        <div class="inputBox">
+                            <el-select v-model="oldWatch.baseTableRead" placeholder="请选择">
+                                <el-option
+                                    v-for="item in oldWatch.baseTableReads"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                  <div class="grid-content bg-purple">
+                      <span class="laber">价格:</span>
+                      <div class="inputBox">
+                          <el-select v-model="oldWatch.baseTableRead" placeholder="请选择">
+                              <el-option
+                                  v-for="item in oldWatch.baseTableReads"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value">
+                              </el-option>
+                          </el-select>
+                      </div>                   
+                  </div>
+                </el-col>
+                <el-col :span="8">
+                  <div class="grid-content bg-purple">
+                      <span class="laber">价格描述:</span>
+                      <div class="inputBox">
+                          <el-input v-model="oldWatch.liquidCrystalRead" placeholder="请输入内容"></el-input>
+                      </div>                   
+                  </div>
+                </el-col>
+                <el-col :span="8">
+                  <div class="grid-content bg-purple">
+                      <span class="laber">基表读数:</span>
+                      <div class="inputBox">
+                          <el-input v-model="oldWatch.baseTableRead" placeholder="请输入内容"></el-input>
+                      </div>                   
+                  </div>
+                </el-col>
+                <el-col :span="8">
+                  <div class="grid-content bg-purple">
+                      <span class="laber">液晶读数:</span>
+                      <div class="inputBox">
+                          <el-input v-model="oldWatch.liquidCrystalRead" placeholder="请输入内容"></el-input>
+                      </div>                   
+                  </div>
+                </el-col>
+                <el-col :span="8">
+                  <div class="grid-content bg-purple">
+                      <span class="laber">累计用气量:</span>
+                      <div class="inputBox">
+                          <el-input v-model="oldWatch.cumuConsu" placeholder="请输入内容"></el-input>
+                      </div>                   
+                  </div>
+                </el-col>
+                <el-col :span="8">
+                  <div class="grid-content bg-purple">
+                      <span class="laber">换表原因:</span>
+                      <div class="inputBox">
+                          <el-select v-model="oldWatch.changeTableCause" placeholder="请选择">
+                              <el-option
+                                  v-for="item in oldWatch.changeTableCauses"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value">
+                              </el-option>
+                          </el-select>
+                      </div>                   
+                  </div>
+                </el-col>
+            </el-row>       
+        </div>
+      </el-card>
+      <!-- 新表信息 -->
+      <el-card class="box-card">
+          <div slot="header" class="clearfix">
+              <span>新表信息</span>
+          </div>
+          <div>
+              <el-row :gutter="20">
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">表钢号:</span>
+                          <div class="inputBox">
+                              <el-input v-model="newWatch.tableSteelNum" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">物料号:</span>
+                          <div class="inputBox">
+                              <el-input v-model="newWatch.materialNum" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">型号:</span>
+                          <div class="inputBox">
+                              <el-input v-model="newWatch.model" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">生产日期:</span>
+                          <div class="inputBox">
+                              <el-date-picker v-model="newWatch.buildDate" type="date" placeholder="选择日期"></el-date-picker>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">用气类型:</span>
+                          <div class="inputBox">
+                              <el-input v-model="newWatch.gasType" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">安装状态:</span>
+                          <div class="inputBox">
+                              <el-select v-model="newWatch.installState" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in newWatch.installStates"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">安装日期:</span>
+                          <div class="inputBox">
+                              <el-date-picker v-model="newWatch.installDate" type="date" placeholder="选择日期"></el-date-picker>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">安装位置:</span>
+                          <div class="inputBox">
+                              <el-select v-model="newWatch.installPosition" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in newWatch.installPositions"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">户内外标识:</span>
+                          <div class="inputBox">
+                              <el-select v-model="newWatch.identification" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in newWatch.identifications"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">保修开始日期:</span>
+                          <div class="inputBox">
+                              <el-date-picker v-model="newWatch.warrantyStartDate" type="date" placeholder="选择日期"></el-date-picker> 
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">保修结束日期:</span>
+                          <div class="inputBox">
+                              <el-date-picker v-model="newWatch.warrantyEndDate" type="date" placeholder="选择日期"></el-date-picker> 
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">读表单元:</span>
+                          <div class="inputBox">
+                              <el-select v-model="newWatch.readingTableUnit" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in newWatch.readingTableUnits"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">基表读数:</span>
+                          <div class="inputBox">
+                              <el-input v-model="newWatch.baseTtableRead" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">液晶读数:</span>
+                        <div class="inputBox">
+                            <el-input v-model="newWatch.liquidCrystalRead" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                  </el-col>
+                  <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">阶梯累计用气量:</span>
+                        <div class="inputBox">
+                            <el-input v-model="newWatch.staAccumuGasCon" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                  </el-col>
+                  <el-col :span="24">
+                      <div class="grid-content bg-purple" style="display: flex;justify-content:flex-end;">
+                        <el-row>
+                          <el-button type="danger" @click='handlePreservation'>保存</el-button>
+                        </el-row>   
+                      </div>
+                  </el-col>
+              </el-row>       
+          </div>
+        </el-card> 
+        <!-- 账户信息 -->
+        <el-card class="box-card" style="margin-top: 20px" v-if='accountIsshow'>
+          <div slot="header" class="clearfix">
+              <span>账户</span>
+          </div>
+          <div>
+              <el-row :gutter="20">
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">合同账户编号:</span>
+                          <div class="inputBox">
+                              <el-input disabled v-model="account.contractAccountNum" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">家庭编号:</span>
+                          <div class="inputBox">
+                              <el-input disabled v-model="account.familyNum" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">公司代码:</span>
+                          <div class="inputBox"> 
+                              <el-input v-model="account.companyCode" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">状态:</span>
+                          <div class="inputBox"> 
+                              <el-select v-model="account.statu" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in account.status"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+              </el-row>       
+          </div>
+          <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+          <div>
+              <el-row :gutter="20">
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">账户名称:</span>
+                          <div class="inputBox">
+                              <el-input v-model="account.accountName" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">合同账户类别:</span>
+                          <div class="inputBox">
+                              <el-select v-model="account.contractAccountCate" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in account.contractAccountCates"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">付款方式:</span>
+                          <div class="inputBox">
+                              <el-select v-model="account.payType" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in account.payTypes"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">银行代码:</span>
+                          <div class="inputBox">
+                              <el-date-picker v-model="account.bankNum" type="date" placeholder="选择日期"></el-date-picker>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">银行账号:</span>
+                          <div class="inputBox">
+                              <el-input v-model="account.bankCode" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">发票抬头:</span>
+                          <div class="inputBox">
+                              <el-input v-model="account.invoiceRaised" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">宽限期限:</span>
+                          <div class="inputBox">
+                              <el-select v-model="account.gracePeriod" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in account.gracePeriods"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">利息码:</span>
+                          <div class="inputBox">
+                              <el-select v-model="account.interesCode" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in account.interesCodes"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="24">
+                      <div class="grid-content bg-purple" style="display: flex;justify-content:flex-end;">
+                        <el-row>
+                          <el-button type="danger" @click='handleAccountPre'>保存</el-button>
+                        </el-row>   
+                      </div>
+                  </el-col>
+              </el-row>       
+          </div>
+        </el-card>
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+          accountIsshow:false,       //账户模块显示隐藏
+          oldWatch:{
+              houseNum:'',        //房产编号
+              adress:'',              //地址
+              replaceState:'',     //置换状态
+              replaceStates:[],     //置换状态下拉列表数据
+              needleNum:'',         //表针编号
+              materialNum:'',     //物料号
+              model:'',       //型号
+              buildDate:'',     //生产日期
+              gasType:'',      //用气类型
+              tableSteelNumbe:'', //表钢号
+              installDate:'',      //安装日期
+              installPosition:'',    //安装位置
+              installPositions:[],    //安装位置下拉列表数据
+              identification:'',    //户内外标识
+              identifications:[],   //户内外标识下拉列表数据
+              inatallState:'',      //安装状态
+              inatallStates:[],    //安装状态下拉列表状态
+              warrantyStartDate:'',    //保修开始日期
+              warrantyEndDate:'',     //保修结束日期
+              baseTableRead:'',       //基表读数
+              liquidCrystalRead:'',    //液晶读数
+              cumuConsu:'',        //  累计用气量
+              changeTableCause:'',          //换表原因
+              changeTableCauses:[],           //换表原因下拉列表数据
+           },
+           newWatch:{
+              tableSteelNum:'',       //表钢号
+              materialNum:'',      //物料号
+              model:'',      //型号
+              buildDate:'',        //生产日期
+              gasType:'',       //用气类型
+              installState:'',     //安装状态
+              installStates:[],          //安装状态下拉列表数据
+              installDate:'',    //安装日期
+              installPosition:'',        //安装位置
+              installPositions:[],       //安装位置下拉列表数据
+              identification:'',          //户内外标识
+              identifications:[],           //户内外标识下拉列表数据
+              warrantyStartDate:'',    //保修开始日期
+              warrantyEndDate:'',          //保修结束日期
+              readingTableUnit:'',        //读表单元
+              readingTableUnits:[],           //读表单元下拉列表数据
+              baseTtableRead:'',       //基表读数
+              liquidCrystalRead:'',            //液晶读数
+              staAccumuGasCon:'', //阶梯累计用气量
+           },
+           account:{
+              contractAccountNum:'',       //合同账户编号
+              familyNum:'',           //家庭编号
+              companyCode:'',    //公司代码
+              statu:'',        //状态
+              status:[],         //状态下拉列表数据
+              accountName:'',          //账户名称
+              contractAccountCate:'',           //合同庄户类别
+              contractAccountCates:[],           //合同账户类别下拉列表数据
+              payType:'',     //付款方式
+              payTypes:[],         //付款方式下拉列表数据
+              bankNum:'',        //银行代码
+              bankCode:'',            //银行账号
+              invoiceRaised:'',            //发票抬头
+              gracePeriod:'',        //宽限期限
+              gracePeriods:[],           //宽限期限下拉列表数据
+              interesCode:'',         //利息码
+              interesCodes:[],            //利息码下拉列表数据
+           },
+        }
+      },
+      methods: {
+        handlePreservation:function(){
+          this.$confirm('表信息提交成功, 是否创建合同账户?', '提示', {
+          confirmButtonText: '创建',
+          cancelButtonText: '关闭',
+          type: 'warning'
+        }).then(() => {
+          this.accountIsshow = true;
+          // this.$message({
+          //   type: 'success',
+          //   message: '删除成功!'
+          // });
+        }).catch(() => {
+          // this.$message({
+          //   type: 'info',
+          //   message: '已取消删除'
+          // });          
+        });
+        },
+        handleAccountPre:function(){           //账户里的信息点击保存
+
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

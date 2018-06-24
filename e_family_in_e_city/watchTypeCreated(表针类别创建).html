@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <h3 style="font-weight: 400">表针类别创建</h3>
+    <div id='app'>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+            <span>表针类别创建</span>
+        </div>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">物料:</span>
+                        <div class="inputBox">
+                          <el-select v-model="materiel" placeholder="请选择">
+                              <el-option
+                                  v-for="item in materiels"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value">
+                              </el-option>
+                          </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">物料类别:</span>
+                        <div class="inputBox">
+                          <el-select v-model="materielType" placeholder="请选择">
+                              <el-option
+                                  v-for="item in materielTypes"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value">
+                              </el-option>
+                          </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+            
+                <el-col :span="24">
+                    <div class="grid-content bg-purple" style="display:flex; justify-content: center;">
+                        <el-button type="primary" @click='handleQuery'>创建</el-button>
+                    </div>
+                </el-col>
+              </el-row>       
+          </div>
+      </el-card> 
+    </div>  
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+            materiel:'',     //物料
+            materiels:[],     //物料下拉列表数据
+            materielType:'',       //物料类别
+            materielTypes:[],         //物料类别下拉列表数据           
+        }
+      },
+      methods: {
+        handleQuery:function(){          //点击查询按钮
+         
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

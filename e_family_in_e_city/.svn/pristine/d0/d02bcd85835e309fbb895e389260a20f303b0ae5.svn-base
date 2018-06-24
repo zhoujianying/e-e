@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <h3 style="font-weight: 400">城市查询</h3>
+    <div id='app'>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+            <span>用户信息</span>
+        </div>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">省:</span>
+                        <div class="inputBox">
+                          <el-select v-model="province" placeholder="请选择">
+                              <el-option
+                                  v-for="item in provinces"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value">
+                              </el-option>
+                          </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">城市:</span>
+                        <div class="inputBox">
+                          <el-select v-model="city" placeholder="请选择">
+                              <el-option
+                                  v-for="item in citys"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value">
+                              </el-option>
+                          </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">标准城市编码:</span>
+                        <div class="inputBox">
+                          <el-select v-model="cityCode" placeholder="请选择">
+                            <el-option
+                                v-for="item in cityCodes"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                            </el-option>
+                          </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">状态:</span>
+                        <div class="inputBox">
+                              <el-select v-model="statu" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in status"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="16">
+                    <div class="grid-content bg-purple" style="display:flex; justify-content: flex-end;">
+                        <el-button type="primary" @click='handleQuery'>查询</el-button>
+                    </div>
+                </el-col>
+              </el-row>       
+          </div>
+      </el-card> 
+      <el-row style="margin-top: 20px">
+        <el-button type="primary">创建</el-button>
+        <el-button type="primary">修改</el-button>
+        <el-button type="primary">批量创建</el-button>
+        <el-button type="primary">带出</el-button>
+      </el-row>
+      <template v-if='tableIsshow'>
+        <el-table :data="tableData"  border  style="width: 100%">
+            <el-table-column type="selection">全选</el-table-column>
+            <el-table-column fixed prop="date" label="省"></el-table-column>
+            <el-table-column prop="name" label="城市"></el-table-column>
+            <el-table-column prop="province" label="城市ID"></el-table-column>
+            <el-table-column prop="city" label="原城市ID"></el-table-column>
+            <el-table-column prop="address" label="标准城市编码"></el-table-column>
+            <el-table-column prop="zip" label="服务热线"> </el-table-column>
+            <el-table-column prop="zip" label="状态"> </el-table-column>
+        </el-table>
+      </template>
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+          province:'',   //省
+          provinces:[],  //省下拉列表数据
+          city:'',            //市
+          citys:[],         //市下拉列表数据
+          cityCode:'',        //标准城市编码
+          cityCodes:[],         //标准城市编码下拉列表数据
+          statu:'',    //状态
+          status:[],         //状态下拉列表数据
+          
+          tableIsshow:false,         //表格默认隐藏
+        }
+      },
+      methods: {
+        handleQuery:function(){          //点击查询按钮
+          this.tableIsshow = true
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

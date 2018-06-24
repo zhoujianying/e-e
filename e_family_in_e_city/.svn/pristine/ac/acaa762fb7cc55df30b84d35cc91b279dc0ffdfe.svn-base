@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <div id='app'>
+        <h3 style="font-weight: 400">单个用户创建</h3>
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+              <span>用户信息</span>
+          </div>
+          <div>
+              <el-row :gutter="20">
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">家庭类型:</span>
+                          <div class="inputBox">
+                            <el-select v-model="userInfor" placeholder="请选择">
+                                <el-option
+                                    v-for="item in userInfor"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">家庭标签:</span>
+                          <div class="inputBox">
+                            <el-select v-model="userInfor" placeholder="请选择">
+                                <el-option
+                                    v-for="item in userInfor"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">用户姓名:</span>
+                          <div class="inputBox">
+                              <el-input v-model="userInfor" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">角色:</span>
+                          <div class="inputBox">
+                                <el-select v-model="userInfor" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in userInfor"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">证件类型:</span>
+                          <div class="inputBox">
+                              <el-select v-model="userInfor" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in userInfor"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">证件号码:</span>
+                          <div class="inputBox">
+                                <el-input v-model="userInfor" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">性别:</span>
+                          <div class="inputBox">
+                            <el-select v-model="userInfor" placeholder="请选择">
+                                <el-option
+                                    v-for="item in userInfor"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">手机:</span>
+                          <div class="inputBox">
+                            <el-input v-model="userInfor" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">座机:</span>
+                          <div class="inputBox">
+                            <el-input v-model="userInfor" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+              </el-row>       
+          </div>
+        </el-card>
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>地址信息</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">城市:</span>
+                            <div class="inputBox">
+                                <el-select v-model="adress" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in adress"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">街道/乡镇:</span>
+                            <div class="inputBox">
+                                <el-select v-model="adress" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in adress"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">小区名称:</span>
+                            <div class="inputBox">
+                                <el-select v-model="adress" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in adress"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">楼栋:</span>
+                            <div class="inputBox">
+                                <el-select v-model="adress" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in adress"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">单元:</span>
+                            <div class="inputBox">
+                                <el-input v-model="adress" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房间号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="adress" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房产状态:</span>
+                            <div class="inputBox">
+                                <el-select v-model="adress" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in adress"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房产类型:</span>
+                            <div class="inputBox">
+                                <el-select v-model="adress" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in adress"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房产标签:</span>
+                            <div class="inputBox">
+                                    <el-select v-model="adress" placeholder="请选择">
+                                        <el-option
+                                            v-for="item in adress"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+        </el-card> 
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>设备信息</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备类型:</span>
+                            <div class="inputBox">
+                            <el-select v-model="equipment" placeholder="请选择">
+                                    <el-option
+                                    v-for="item in equipment"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">物料号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="equipment" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">型号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="equipment" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">生产日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="equipment.contractExpDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">用气类型:</span>
+                            <div class="inputBox">
+                                <el-input v-model="equipment" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">表钢号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="equipment" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">安装日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="equipment.contractExpDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">安装位置:</span>
+                            <div class="inputBox">
+                                <el-select v-model="equipment" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in equipment"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">户内外标识:</span>
+                            <div class="inputBox">
+                                <el-select v-model="equipment" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in equipment"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">安装状态:</span>
+                            <div class="inputBox">
+                                <el-select v-model="equipment" placeholder="请选择">
+                                <el-option
+                                    v-for="item in equipment"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">保修开始日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="equipment.contractExpDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">保修结束日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="equipment.contractExpDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">基表读数:</span>
+                            <div class="inputBox">
+                                <el-input v-model="equipment" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">液晶读数:</span>
+                            <div class="inputBox">
+                                <el-input v-model="equipment" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+        </el-card>  
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>合约信息</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">合约类型:</span>
+                            <div class="inputBox">
+                                <el-select v-model="contract" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in contract"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">合约类型:</span>
+                            <div class="inputBox">
+                                <el-select v-model="contract" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in contract"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">价格:</span>
+                            <div class="inputBox">
+                                <el-select v-model="contract" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in contract"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">价格描述:</span>
+                            <div class="inputBox">
+                                <el-input v-model="contract" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">科目确认标识:</span>
+                            <div class="inputBox">
+                                <el-select v-model="contract" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in contract"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">抄表顺序号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="contract" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">协议类型:</span>
+                            <div class="inputBox">
+                                <el-select v-model="contract" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in contract"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">协议编号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="contract" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">锁定:</span>
+                            <div class="inputBox">
+                                <el-select v-model="contract" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in contract"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">锁定描述:</span>
+                            <div class="inputBox">
+                                <el-input v-model="contract" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">读表单元:</span>
+                            <div class="inputBox">
+                                <el-select v-model="contract" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in contract"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">公司代码:</span>
+                            <div class="inputBox">
+                                <el-select v-model="contract" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in contract"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">计费类型:</span>
+                            <div class="inputBox">
+                                <el-select v-model="contract" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in contract"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">居住人数:</span>
+                            <div class="inputBox">
+                                <el-input v-model="contract" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">多人口生效日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="equipment.contractExpDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">多人口失效日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="equipment.contractExpDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+        </el-card> 
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>账户信息</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">账户名称:</span>
+                            <div class="inputBox">
+                                <el-input v-model="account" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">收款方式:</span>
+                            <div class="inputBox">
+                                <el-select v-model="account" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in account"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">银行代码:</span>
+                            <div class="inputBox">
+                                <el-select v-model="account" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in account"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">银行账户:</span>
+                            <div class="inputBox">
+                                <el-input v-model="account" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">到期期限:</span>
+                            <div class="inputBox">
+                                <el-select v-model="account" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in account"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">公司代码:</span>
+                            <div class="inputBox">
+                                <el-select v-model="account" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in account"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">利息码:</span>
+                            <div class="inputBox">
+                                <el-select v-model="account" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in account"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="24">
+                        <div class="grid-content bg-purple" style="display: flex;justify-content:flex-end;">
+                            <el-row>
+                            <el-button type="danger">保存</el-button>
+                            </el-row>   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+        </el-card> 
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+           userInfor:{
+
+           },
+           adress:{
+
+           },
+           equipment:{
+
+           },
+           contract:{
+
+           },
+           account:{
+
+           }
+        }
+      },
+      methods: {
+        handlePreservation:function(){
+            
+        },
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

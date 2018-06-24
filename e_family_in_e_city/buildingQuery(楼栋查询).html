@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <h3 style="font-weight: 400">楼栋查询</h3>
+    <div id='app'>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+            <span>查询条件</span>
+        </div>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">城市:</span>
+                        <div class="inputBox">
+                          <el-select v-model="city" placeholder="请选择">
+                              <el-option
+                                  v-for="item in citys"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value">
+                              </el-option>
+                          </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">县区:</span>
+                        <div class="inputBox">
+                          <el-select v-model="conty" placeholder="请选择">
+                              <el-option
+                                  v-for="item in contys"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value">
+                              </el-option>
+                          </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">街道:</span>
+                        <div class="inputBox">
+                              <el-select v-model="street" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in streets"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">小区/行政村:</span>
+                        <div class="inputBox">
+                            <el-select v-model="quarter" placeholder="请选择">
+                                <el-option
+                                    v-for="item in quarters"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">小区编码:</span>
+                        <div class="inputBox">
+                            <el-input v-model="quarterCode" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">楼栋:</span>
+                        <div class="inputBox">
+                            <el-select v-model="building" placeholder="请选择">
+                                <el-option
+                                    v-for="item in buildings"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">楼栋编码:</span>
+                        <div class="inputBox">
+                            <el-input v-model="buildingCode" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">状态:</span>
+                        <div class="inputBox">
+                            <el-select v-model="statu" placeholder="请选择">
+                                <el-option
+                                    v-for="item in status"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple" style="display:flex; justify-content: flex-end;">
+                        <el-button type="primary" @click='handleQuery'>查询</el-button>
+                    </div>
+                </el-col>
+              </el-row>       
+          </div>
+      </el-card> 
+      <el-row style="margin-top: 20px">
+        <el-button type="primary">创建</el-button>
+        <el-button type="primary">修改</el-button>
+        <el-button type="primary">批量创建</el-button>
+        <el-button type="primary">导出</el-button>
+      </el-row>
+      <el-card class="box-card"  v-if='tableIsshow'>
+            <div slot="header" class="clearfix">
+                <span>楼栋信息</span>
+            </div>
+            <div>
+                <template>
+                    <el-table :data="tableData"  border  style="width: 100%">
+                        <el-table-column type="selection" label='全选'></el-table-column>
+                        <el-table-column prop="province" label="城市"></el-table-column>
+                        <el-table-column prop="city" label="县区"></el-table-column>
+                        <el-table-column prop="city" label="街道"></el-table-column>
+                        <el-table-column prop="city" label="小区/行政村"></el-table-column>
+                        <el-table-column prop="city" label="小区ID"></el-table-column>
+                        <el-table-column prop="city" label="楼栋"></el-table-column>
+                        <el-table-column prop="city" label="楼栋ID"></el-table-column>
+                        <el-table-column prop="province" label="门牌号"></el-table-column>
+                        <el-table-column prop="zip" label="状态"> </el-table-column>
+                    </el-table>
+                </template>
+            </div>
+      </el-card>    
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+          city:'',            //城市
+          citys:[],         //城市下拉列表数据
+          conty:'',          //县区
+          contys:[],         //县区下拉列表数据
+          street:'',        //街道
+          streets:[],         //街道下拉列表数据
+          quarter:'',    //小区、行政村
+          quarters:[],           //小区、行政村下拉列表数据
+          quarterCode:'',            //小区编码
+          building:'',       //楼栋
+          buildings:[],        //楼栋下拉列表数据
+          buildingCode:'',       //楼栋编码
+          statu:'',             //状态
+          status:[],           //状态下拉列表数据
+          
+          tableIsshow:false,         //表格默认隐藏
+        }
+      },
+      methods: {
+        handleQuery:function(){          //点击查询按钮
+          this.tableIsshow = true
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

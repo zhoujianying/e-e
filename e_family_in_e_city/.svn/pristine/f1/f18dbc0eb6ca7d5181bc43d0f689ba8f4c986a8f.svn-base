@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <div id='app'>
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+              <span>添加用户信息</span>
+          </div>
+          <div>
+              <el-row :gutter="20">
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">房产编码:</span>
+                          <div class="inputBox">
+                              <el-input v-model="houseCode" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">家庭编码:</span>
+                          <div class="inputBox">
+                              <el-input v-model="familyCode" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">用户姓名:</span>
+                          <div class="inputBox">
+                              <el-input v-model="userName" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">性别:</span>
+                          <div class="inputBox">
+                                <el-select v-model="sex" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in sexs"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">证件类型:</span>
+                          <div class="inputBox">
+                              <el-select v-model="certificatesType" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in certificatesTypes"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">证件号码:</span>
+                          <div class="inputBox">
+                                <el-input v-model="certificatesNum" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">联系方式:</span>
+                          <div class="inputBox">
+                              <el-input v-model="tel" placeholder="请输入内容"></el-input>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">用户类别:</span>
+                          <div class="inputBox">
+                              <el-select v-model="userType" placeholder="请选择">
+                                  <el-option
+                                      v-for="item in userTypes"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                  </el-option>
+                              </el-select>
+                          </div>                   
+                      </div>
+                  </el-col>
+                  <el-col :span="8">
+                      <div class="grid-content bg-purple">
+                          <span class="laber">状态:</span>
+                          <div class="inputBox">
+                                <el-select v-model="statu" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in status"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                          </div>                   
+                      </div>
+                  </el-col> 
+                  <el-col :span="24">
+                    <div class="grid-content bg-purple" style="display: flex;justify-content:flex-end;">
+                        <el-row>
+                        <el-button type="danger" @click='handlePreservation'>保存</el-button>
+                        </el-row>   
+                    </div>
+                  </el-col>
+              </el-row>       
+          </div>
+        </el-card> 
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+            houseCode:'',  //用户编码
+            familyCode:'',     //家庭编码
+            userName:'',    //用户姓名
+            sex:'',           //性别
+            sexs:[],         //性别下拉列表数据
+            certificatesType:'',         //证件类型
+            certificatesTypes:[],        //证件类型下拉列表数据
+            certificatesNum:'',           //证件号码
+            tel:'',       //联系方式
+            userType:'',           //用户类别
+            userTypes:[],          //用户类别下拉列表数据
+            statu:'',    //状态
+            status:[],     //状态下拉列表数据
+        }
+      },
+      methods: {
+        handlePreservation:function(){
+            
+        },
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

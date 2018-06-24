@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../style/public.css">
+  </head>
+  <body class="body">
+    <div id='app'>
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <el-row :gutter="20" style="margin-bottom: -20px">
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">房产编码:</span>
+                            <span class="value">{{realEstateCode}}</span>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">房产地址:</span>
+                            <span class="value">{{houseAddress}}</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-button  type="primary" @click="newBuildIsshow = true">新建</el-button>
+                        <el-button type="primary">编辑</el-button>
+                    </el-col>
+                </el-row>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">设备编码:</span>
+                            <span class="value">{{deviceCoding}}</span>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">设备类型:</span>
+                            <span class="value">{{equipmentType}}</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">有效性:</span>
+                            <span class="value">{{effectiveness}}</span>               
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">安装日期:</span>
+                            <span class="value">{{installDate}}</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">品牌:</span>
+                            <span class="value">{{brand}}</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">型号:</span>
+                            <span class="value">{{model}}</span>                
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">设备编号:</span>
+                            <span class="value">{{equipmentNum}}</span>                 
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">销售商:</span>
+                            <span class="value">{{seller}}</span>                 
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">保修开始日期:</span>
+                            <span class="value">{{warrantyStartDate}}</span>                 
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">保修结束日期:</span>
+                            <span class="value">{{warrantyEndDate}}</span>                 
+                        </div>
+                    </el-col>
+                </el-row> 
+                <el-row :gutter="20">
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="key">有效配件数量:</span>
+                            <span class="value">{{partsNum}}</span>                 
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-button  type="primary">查看明细</el-button>
+                        <el-button type="primary">增加配件</el-button>
+                    </el-col>
+                </el-row>      
+            </div>
+            <template>
+                <el-table  :data="tableData"  border  style="width: 100%">
+                  <el-table-column fixed prop="date" label="配件编码"></el-table-column>
+                  <el-table-column prop="name" label="配件名称"></el-table-column>
+                  <el-table-column prop="province" label="配件状态"></el-table-column>
+                  <el-table-column prop="city" label="保修状态"></el-table-column>
+                  <el-table-column prop="address" label="保修开始日期"></el-table-column>
+                  <el-table-column prop="zip" label="保修结束日期"> </el-table-column>
+                  <el-table-column prop="zip" label="安装日期"> </el-table-column>
+                </el-table>
+            </template>
+        </el-card>
+    <!-- 新建设备弹窗 -->
+       <el-dialog title="新增设备" :visible.sync="newBuildIsshow" width='60%'>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">设备类型:</span>
+                        <div class="inputBox">
+                            <el-select v-model="newBuild.equipmentType" placeholder="请选择">
+                                <el-option
+                                    v-for="item in newBuild.equipmentTypes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">品牌:</span>
+                        <div class="inputBox">
+                            <el-input v-model="newBuild.brand" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">型号:</span>
+                        <div class="inputBox">
+                            <el-input v-model="newBuild.model" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">设备编码:</span>
+                        <div class="inputBox">
+                            <el-input v-model="newBuild.deviceCoding" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">有效性:</span>
+                        <div class="inputBox" style="line-height: 40px">
+                            <template>
+                                <el-radio v-model="newBuild.effective" label="1">有效</el-radio>
+                                <el-radio v-model="newBuild.invalid" label="2">无效</el-radio>
+                            </template>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">安装日期:</span>
+                        <div class="inputBox">
+                            <el-date-picker v-model="newBuild.installDate" type="date" placeholder="选择日期"></el-date-picker>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">供应商:</span>
+                        <div class="inputBox">
+                            <el-input v-model="newBuild.supplier" placeholder="请输入内容"></el-input>
+                        </div>        
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">保修状态:</span>
+                        <div class="inputBox" style="line-height: 40px">
+                            <template>
+                                <el-radio v-model="newBuild.guarantee" label="1">在保</el-radio>
+                                <el-radio v-model="newBuild.notGuaranteed" label="2">不在保</el-radio>
+                            </template>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">保修开始日期:</span>
+                        <div class="inputBox">
+                            <el-date-picker v-model="newBuild.guaranteeStartDate" type="date" placeholder="选择日期"></el-date-picker>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">保修结束日期:</span>
+                        <div class="inputBox">
+                            <el-date-picker v-model="newBuild.guaranteeWEndDate" type="date" placeholder="选择日期"></el-date-picker>
+                        </div>                   
+                    </div>
+                </el-col>
+            </el-row>       
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="handleEquNewBuCancel">取 消</el-button>
+            <el-button type="primary" @click="handleEquNewBuSure">确 定</el-button>
+        </div> 
+    </el-dialog>
+    <!-- 合约 -->
+    <el-card class="box-card" style="margin-top: 20px" v-if='contractIsshow'>
+        <div slot="header" class="clearfix">
+            <span>合约</span>
+        </div>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">合约编号:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="contract.contractNum" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">设备编号:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="contract.equipmentNum" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">合约类型:</span>
+                        <div class="inputBox">
+                            <el-select v-model="contract.contractType" placeholder="请选择">
+                                <el-option
+                                    v-for="item in contract.contractTypes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">公司代码:</span>
+                        <div class="inputBox">
+                            <el-select v-model="contract.companyCode" placeholder="请选择">
+                                <el-option
+                                    v-for="item in contract.companyCodes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+            </el-row>       
+        </div>
+        <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">生效日期:</span>
+                        <div class="inputBox">
+                            <el-date-picker v-model="contract.takeEffectDate" type="date" placeholder="选择日期"></el-date-picker>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">协议类型:</span>
+                        <div class="inputBox">
+                            <el-select v-model="contract.protocolType" placeholder="请选择">
+                                <el-option
+                                    v-for="item in contract.protocolTypes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">协议编号:</span>
+                        <div class="inputBox">
+                            <el-input v-model="contract.protocolNum" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">锁定类别:</span>
+                        <div class="inputBox">
+                            <el-select v-model="contract.lockType" placeholder="请选择">
+                                <el-option
+                                    v-for="item in contract.lockTypes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">锁定原因:</span>
+                        <div class="inputBox">
+                            <el-input v-model="contract.lockCause" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="24">
+                    <div class="grid-content bg-purple" style="float: right">
+                        <el-row>
+                            <el-button type='primary' @click='handleEquContPre'>保存</el-button>
+                          </el-row>          
+                    </div>
+                </el-col>
+            </el-row>       
+        </div>
+    </el-card>
+    <!-- 账户 -->
+    <el-card class="box-card" style="margin-top: 20px" v-if='accountIsshow'>
+        <div slot="header" class="clearfix">
+            <span>账户</span>
+        </div>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">合同账户编号:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="account.accountNum" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">用户编号:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="account.userNum" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">公司代码:</span>
+                        <div class="inputBox">
+                            <el-input v-model="account.compneyNum" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">状态:</span>
+                        <div class="inputBox">
+                            <el-select v-model="account.status" placeholder="请选择">
+                                <el-option
+                                    v-for="item in account.statuss"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+            </el-row>       
+        </div>
+        <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">账户名称:</span>
+                        <div class="inputBox">
+                            <el-input v-model="account.accountName" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">合同账户类别:</span>
+                        <div class="inputBox">
+                            <el-select v-model="account.accountType" placeholder="请选择">
+                                <el-option
+                                    v-for="item in account.accountTypes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">付款方式:</span>
+                        <div class="inputBox">
+                            <el-select v-model="account.paymentMethod" placeholder="请选择">
+                                <el-option
+                                    v-for="item in account.paymentMethods"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">银行代码:</span>
+                        <div class="inputBox">
+                            <el-input v-model="account.bankCode" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">银行账号:</span>
+                        <div class="inputBox">
+                            <el-input v-model="account.bankAccount" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">发票抬头:</span>
+                        <div class="inputBox">
+                            <el-input v-model="account.invoicesTitle" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">宽限期限:</span>
+                        <div class="inputBox">
+                            <el-select v-model="account.gracePeriod" placeholder="请选择">
+                                <el-option
+                                    v-for="item in account.gracePeriods"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">利息码:</span>
+                        <div class="inputBox">
+                            <el-select v-model="account.interestCode" placeholder="请选择">
+                                <el-option
+                                    v-for="item in account.interestCodes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="24">
+                    <div class="grid-content bg-purple" style="float: right">
+                        <el-row>
+                            <el-button type='primary' @click='handleEquAccountPre'>保存</el-button>
+                          </el-row>          
+                    </div>
+                </el-col>
+            </el-row>       
+        </div>
+    </el-card>      
+    </div>  
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {       
+            realEstateCode:'',   //房产编码
+            houseAddress:'',    //房产地址
+            deviceCoding:'',   //设备编码
+            equipmentType:'',   //设备类型
+            effectiveness:'',    //有效性
+            installDate:'',   //安装日期
+            brand:'',    //品牌
+            model:'',    //型号
+            equipmentNum:'',   //设备编号
+            seller:'',         //销售商
+            warrantyStartDate:'',   //保修开始日期
+            warrantyEndDate:'',      //保修结束日期
+            partsNum:'',      //有效配件数量
+
+            newBuildIsshow:false,  //控制新建弹窗显示、隐藏
+            newBuild:{               //新建
+                equipmentType:'',   //设备类型
+                brand:'',    //品牌
+                model:'',   //型号
+                deviceCoding:'',   //设备编码
+                effective:'',   //有效
+                invalid:'',     //无效
+                installDate:'',    //安装日期
+                supplier:'',       //供应商
+                guarantee:'',      //在保
+                notGuaranteed:'',      //不在保
+                guaranteeStartDate:'',      //保修开始日期
+                guaranteeWEndDate:'',    //保修结束日期
+
+            },
+            contractIsshow:false,      //控制合约模块显示隐藏
+            contract:{             //合约
+                contractNum:'',        //合约编号
+                equipmentNum:'',        //设备编号
+                contractType:'',       //合约类型
+                contractTypes:[],        //合约类型下拉列表数据
+                companyCode:'',           //公司代码
+                companyCodes:[],           // 公司代码下拉列表数据
+                takeEffectDate:'',            //生效日期
+                protocolType:'',        //协议类型
+                protocolTypes:[],        //协议类型下拉列表数据
+                protocolNum:'',        //协议编号
+                lockType:'',        //锁定类别
+                lockTypes:[],         //锁定类别下拉列表数据
+                lockCause:'',          //锁定原因
+            },
+            accountIsshow:false,      //控制账户模块显示隐藏
+            account:{            //账户
+                accountNum:'',        //合同账户编号
+                userNum:'',         //用户编号
+                compneyNum:'',         //公司代码
+                status:'',          //状态
+                statuss:[],    //状态下拉列表数据
+                accountName:'',   //账户名称
+                accountType:'',     //合同账户类别
+                accountTypes:[],      //合同账户类别下拉列表数据
+                paymentMethod:'',     //付款方式
+                paymentMethods:[],   //付款方式下拉列表数据
+                bankCode:'',   //银行代码
+                bankAccount:'',  //银行账号
+                invoicesTitle:'',    //发票抬头
+                gracePeriod:'',   //宽限期限
+                gracePeriods:[],       //宽限期限下拉列表数据
+                interestCode:'',        //利息码
+                interestCodes:[],      //利息码下拉列表数据
+            }
+        }       
+      },
+      methods: {
+        handleEquNewBuCancel:function(){        //点击新建弹窗取消按钮
+            this.newBuildIsshow = false
+        },
+        handleEquNewBuSure:function(){
+            this.newBuildIsshow = false;
+            // 请求接口成功时
+            this.$confirm('设备创建成功，是否需要创建新合约?', '提示', {
+                confirmButtonText: '创建',
+                cancelButtonText: '关闭',
+                type: 'warning'
+            }).then(() => {
+                this.contractIsshow = true
+                // this.$message({
+                //     type: 'success',
+                //     message: '成功!'
+                // });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '取消创建新合约'
+                });          
+            });
+
+        },
+        handleEquContPre:function(){         //点击合约保存按钮
+            // 请求接口成功后
+            this.$confirm('属于设备3003的设备创建成功，是否创建合同账户?', '提示', {
+                confirmButtonText: '创建',
+                cancelButtonText: '关闭',
+                type: 'warning'
+            }).then(() => {
+                this.accountIsshow = true
+                // this.$message({
+                //     type: 'success',
+                //     message: '成功!'
+                // });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '取消创建新合同账户'
+                });          
+            });
+
+        },
+        handleEquAccountPre:function(){    //点击账户保存按钮提交
+
+        },
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

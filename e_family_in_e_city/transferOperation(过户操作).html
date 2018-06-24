@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <h3 style="font-weight: 400">用户过户界面</h3>
+    <div id='app'>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+            <span>老户信息</span>
+        </div>
+        <div>
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">户主姓名:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="old.userName" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">用户地址:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="old.adress" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">联系方式:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="old.tel" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">证件类型:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="old.codeType" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">证件号码:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="old.identificationNum" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">用户标签:</span>
+                        <div class="inputBox">
+                            <el-input disabled v-model="old.laber" placeholder="请输入内容"></el-input>
+                        </div>                   
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">房产状态:</span>
+                        <div class="inputBox">
+                            <el-input v-model="old.houseState" placeholder="请输入内容"></el-input>
+                        </div>           
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <span class="laber">人口数量:</span>
+                        <div class="inputBox">
+                            <el-input v-model="old.peopleNum" placeholder="请输入内容"></el-input>
+                        </div>           
+                    </div>
+                </el-col>
+              </el-row> 
+              <template>
+                <el-table :data="tableData"  border  style="width: 100%">                       
+                    <el-table-column prop="province" label="表针编号"></el-table-column>
+                    <el-table-column prop="city" label="表钢号"></el-table-column>
+                    <el-table-column prop="city" label="用气价格"></el-table-column>
+                    <el-table-column prop="city" label='表底数'></el-table-column>
+                    <el-table-column prop="province" label="最后抄表时间"></el-table-column>
+                    <el-table-column prop="city" label="用气性质"></el-table-column>
+                    <el-table-column prop="city" label="累计用气量"></el-table-column>
+                    <el-table-column label="操作">
+                        <template slot-scope="scope">
+                            <el-button type="text" size="small">刷新</el-button>
+                            <el-button type="text" size="small">录入表数</el-button>
+                            <el-button type="text" size="small">滞纳金计算</el-button>
+                        </template>
+                  </el-table-column>
+                </el-table>
+              </template>      
+          </div>
+      </el-card> 
+      <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>账户信息</span>
+            </div>
+            <div>
+                <template>
+                    <el-table :data="tableData"  border  style="width: 100%">                       
+                        <el-table-column prop="province" label="账户编号"></el-table-column>
+                        <el-table-column prop="city" label="账户名称"></el-table-column>
+                        <el-table-column prop="city" label="账户余额"></el-table-column>
+                        <el-table-column prop="city" label='最后一次交易日期'></el-table-column>
+                        <el-table-column prop="province" label="交易金额"></el-table-column> 
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button type="text" size="small">刷新</el-button>
+                                <el-button type="text" size="small">缴费</el-button>
+                                <el-button type="text" size="small">退款</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>      
+            </div>
+      </el-card>  
+      <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>新户信息</span>
+            </div>
+            <div>
+                <el-row :gutter='20'>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">用户类型:</span>
+                            <div class="inputBox" style="margin-top: 10px">
+                                <template>
+                                    <el-radio v-model="newHouseholds.radio" label="1">新用户</el-radio>
+                                    <el-radio v-model="newHouseholds.radio" label="2">老用户</el-radio>
+                                </template>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">户主姓名:</span>
+                            <div class="inputBox">
+                                <el-input v-model="newHouseholds.userName" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">联系方式:</span>
+                            <div class="inputBox">
+                                <el-input v-model="newHouseholds.tel" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">证件类型:</span>
+                            <div class="inputBox">
+                                <el-input v-model="newHouseholds.codeType" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">证件号码:</span>
+                            <div class="inputBox">
+                                <el-input v-model="newHouseholds.identificationNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">客户标签:</span>
+                            <div class="inputBox">
+                                <el-input v-model="newHouseholds.label" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">人口数:</span>
+                            <div class="inputBox">
+                                <el-input v-model="newHouseholds.peopleNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">供气协议号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="newHouseholds.protocolNumber" placeholder="请输入内容"></el-input>
+                            </div>           
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">表底数:</span>
+                            <div class="inputBox">
+                                <el-input v-model="newHouseholds.tableBottomNum" placeholder="请输入内容"></el-input>
+                            </div>           
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">累计用气量:</span>
+                            <div class="inputBox">
+                                <el-input v-model="newHouseholds.gasCon" placeholder="请输入内容"></el-input>
+                            </div>           
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">过户日期:</span>
+                            <div class="inputBox">
+                                <el-input v-model="newHouseholds.dateTransfer" placeholder="请输入内容"></el-input>
+                            </div>           
+                        </div>
+                    </el-col>
+                </el-row> 
+            </div>
+      </el-card>  
+      <div class="grid-content bg-purple" style="display:flex; justify-content: flex-end; margin-top: 20px">
+        <el-button type="primary" @click='handleTransfer'>过户</el-button>
+      </div>
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+         old:{   
+            userName:'',      //户主姓名
+            adress:'',      //用户地址
+            tel:'',   //联系方式
+            codeType:'',       //证件类型
+            identificationNum:'',       //证件号码
+            laber:'',       //用户标签
+            houseState:'',       //房产状态
+            peopleNum:'',       //人口数量
+         },
+         newHouseholds:{
+            radio: '1',
+            userName:'',       //户主姓名
+            tel:'',        //联系方式
+            codeType:'',     //证件类型
+            identificationNum:'',     //证件号码
+            label:'',          //客户标签
+            peopleNum:'',      //人口数
+            protocolNumber:'',   //供气协议号
+            tableBottomNum:'',       //表底数
+            gasCon:'',         //累计用气量
+            dateTransfer:'',        //过期日期
+         }
+        }
+      },
+      methods: {
+        handleTransfer:function(){          //点击过户按钮
+            this.$confirm('老账户2001下有余额30元，是否转入新账户?', '提示', {
+            confirmButtonText: '是',
+            cancelButtonText: '否',
+            type: 'warning'
+            }).then(() => {
+            // this.$message({
+            //     type: 'success',
+            //     message: '删除成功!'
+            // });
+            }).catch(() => {
+            // this.$message({
+            //     type: 'info',
+            //     message: '已取消删除'
+            // });          
+            });
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

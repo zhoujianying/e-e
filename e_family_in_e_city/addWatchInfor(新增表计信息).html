@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <!-- <h2 style="font-weight: 400">用户查询</h2> -->
+    <div id='app'>
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>新增表计信息</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房产编号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="addWatchInfor.houseNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">地址:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="addWatchInfor.adress" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">置换状态:</span>
+                            <div class="inputBox"> 
+                                <el-select disabled v-model="addWatchInfor.replaceState" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.replaceStates"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房产类型:</span>
+                            <div class="inputBox">
+                                <el-select disabled v-model="addWatchInfor.houseType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.houseTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">备注:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="addWatchInfor.remark" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+            <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备类型:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.equipmentType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.equipmentTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">物料号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.materialNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">型号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.model" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">生产日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="addWatchInfor.buildDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">用气类型:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.gasType" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">表钢号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.tableSteelNumbe" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">安装日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="addWatchInfor.installDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">安装位置:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.installPosition" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.installPositions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">户内外标识:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.identification" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.identifications"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">安装状态:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.inatallState" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.inatallStates"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">保修开始日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="addWatchInfor.warrantyStartDate" type="date" placeholder="选择日期"></el-date-picker> 
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">保修结束日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="addWatchInfor.warrantyEndDate" type="date" placeholder="选择日期"></el-date-picker> 
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">基表读数:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.baseTableRead" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">液晶读数:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.liquidCrystalRead" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+        </el-card>
+        <!-- 合约信息 -->
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>合约信息</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">合约类别:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.contractCategory" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.contractCategorys"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">合约类型:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.contractType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.contractTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">价格:</span>
+                            <div class="inputBox"> 
+                                <el-select v-model="addWatchInfor.price" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.prices"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">价格描述:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.priceCon" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">科目确定标识:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.mark" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.marks"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">抄表顺序号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.watchNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">协议类型:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.agreementType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.agreementTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">协议编号:</span>
+                            <div class="inputBox"> 
+                                <el-input v-model="addWatchInfor.agreementNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">锁定:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.lock" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.locks"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">锁定描述:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.lockCon" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">读表单元:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.readWatchUnit" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.readWatchUnits"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">公司代码:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.companyCode" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.companyCodes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">计费类型:</span>
+                            <div class="inputBox"> 
+                                <el-select v-model="addWatchInfor.chargeType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.chargeTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">居住人数:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.liveNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">多人口生效日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="addWatchInfor.effDateOfMultPopu" type="date" placeholder="选择日期"></el-date-picker> 
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">多人口失效日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="addWatchInfor.multPopuFailDate" type="date" placeholder="选择日期"></el-date-picker> 
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="24">
+                        <div class="grid-content bg-purple" style="display: flex; flex-direction:row-reverse">
+                            <el-button type="primary" @click='handleContract' style="margin-right: 50px">保存</el-button>             
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+        </el-card>
+        <!-- 账户 -->
+        <el-card class="box-card" v-if='addWatchInfor.accountIsshow' style="margin-top: 20px">
+            <div slot="header" class="clearfix">
+                <span>账户</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">合同账户编号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="addWatchInfor.contractAccountNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">家庭编号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="addWatchInfor.familyNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">公司代码:</span>
+                            <div class="inputBox"> 
+                                <el-input v-model="addWatchInfor.companyNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">状态:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.status" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.statuss"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+            <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">账户名称:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.accountName" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">合同账户类别:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.contractAccountType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.contractAccountTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">付款方式:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.payType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.payTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">银行代码:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="addWatchInfor.bankCode" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">银行账号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="addWatchInfor.bankAccount" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">宽限期限:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.gracePeriod" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.gracePeriods"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">利息码:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addWatchInfor.interestCode" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in addWatchInfor.interestCodes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>  
+                    <el-col :span="24">
+                        <div class="grid-content bg-purple" style="display: flex; flex-direction:row-reverse">
+                            <el-button type="primary" @click='handleContractPre' style="margin-right: 50px">保存</el-button>             
+                        </div>
+                    </el-col>                  
+                </el-row>       
+            </div>
+        </el-card>
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+           addWatchInfor:{
+              houseNum:'',        //房产编号
+              adress:'',              //地址
+              replaceState:'',     //置换状态
+              replaceStates:[],     //置换状态下拉列表数据
+              houseType:'',       //房产类型
+              houseTypes:[],      //房产类型下拉列表数据
+              remark:'',          //备注
+              equipmentType:'',         //设备类型
+              equipmentTypes:[],       //设备类型下拉列表数据
+              materialNum:'',     //物料号
+              model:'',       //型号
+              buildDate:'',     //生产日期
+              gasType:'',      //用气类型
+              tableSteelNumbe:'', //表钢号
+              installDate:'',      //安装日期
+              installPosition:'',    //安装位置
+              installPositions:[],    //安装位置下拉列表数据
+              identification:'',    //户内外标识
+              identifications:[],   //户内外标识下拉列表数据
+              inatallState:'',      //安装状态
+              inatallStates:[],    //安装状态下拉列表状态
+              warrantyStartDate:'',    //保修开始日期
+              warrantyEndDate:'',     //保修结束日期
+              baseTableRead:'',       //基表读数
+              liquidCrystalRead:'',    //液晶读数
+            //   合约信息
+              contractCategory:'',    //合约类别
+              contractCategorys:[],    //合约类别下拉列表数据
+              contractType:'',         //合约类型
+              contractTypes:[],       //合约类型下拉列表数据
+              price:'',          //价格
+              prices:[],        //价格下拉列表数据
+              priceCon:'',         //价格描述
+              mark:'',      //科目确定标识
+              marks:[],       //科目确定标识下拉列表数据
+              watchNum:'',       //抄表顺序号
+              agreementType:'',        //协议类型
+              agreementTypes:[],     //协议类型下拉列表数据
+              agreementNum:'',       //协议编号
+              lock:'',        //锁定
+              locks:[],    //锁定下拉列表数据
+              lockCon:'',       //锁定描述
+              readWatchUnit:'',    //读表单元
+              readWatchUnits:[],     //读表单元下拉列表数据
+              companyCode:'',       //公司代码
+              companyCodes:[],       //公司代码下拉列表数据
+              chargeType:'',       //计费类型
+              chargeTypes:[],         //计费类型下拉列表数据
+              liveNum:'',          //居住人数
+              effDateOfMultPopu:'',  //多人口生效日期
+              multPopuFailDate:'',     //多人口失效日期
+
+              accountIsshow:false,     //账户模块显示隐藏
+            //   账户信息
+              contractAccountNum:'',      //合同账户编号
+              familyNum:'',         //家庭编号
+              companyNum:'',            //公司代码
+              status:'',         //状态
+              statuss:[],         //状态下拉列表数据
+              accountName:'',        //账户名称
+              contractAccountType:'',   //合同账户类别
+              contractAccountTypes:[],      //合同账户下拉列表数据
+              payType:'',       //付款方式
+              payTypes:[],   // 付款方式下拉列表数据
+              bankCode:'',      //银行代码
+              bankAccount:'',      //银行账号
+              gracePeriod:'',        //宽限期限
+              gracePeriods:[],        //宽限期限下拉列表数据
+              interestCode:'',      //利息码
+              interestCodes:[],         //利息码下拉列表数据
+           }
+        }
+      },
+      methods: {
+        handleContract:function(){         //点击合约信息保存按钮
+            // 保存成功后
+            this.$confirm('表计设备合约创建成功,是否创建合同账户?', '提示', {
+                confirmButtonText: '创建',
+                cancelButtonText: '关闭',
+                type: 'warning'
+                }).then(() => {
+                    this.addWatchInfor.accountIsshow = true
+                // this.$message({
+                //     type: 'success',
+                //     message: '删除成功!'
+                // });
+                }).catch(() => {
+                // this.$message({
+                //     type: 'info',
+                //     message: '已取消删除'
+                // });          
+            });
+        },
+        handleContractPre:function(){        //点击账户保存按钮
+
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../style/public.css">
+  </head>
+  <body class="body">
+    <div id='app'>
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>设备-燃气表</span>
+                <el-row style="display: inline-block; float:right; margin-bottom: 0;margin-top: -10px">
+                    <el-button  type="primary" @click='handleEditWatchNeedle'>编辑表计</el-button>
+                    <el-button type="primary" @click='handleChangerWatchNeedle'>更改物料</el-button>
+                    <el-button  type="primary">换表</el-button>
+                    <el-button type="primary">添加表计</el-button>
+                    <el-button  type="primary">抄表/购气记录</el-button>
+                </el-row>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备编号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="equipmentNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房产:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="house" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">合约:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="contract" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+            <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">物料编号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="materialNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备描述:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="deviceDesc" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备状态:</span>
+                            <div class="inputBox">
+                                <el-select disabled v-model="equipmentState" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in equipmentStates"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备类型:</span>
+                            <div class="inputBox">
+                                <el-select disabled v-model="equipmentType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in equipmentTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">生产厂家:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="manufacturer" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">生产日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker disabled v-model="productionDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">安装日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="installDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">保修开始日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="warrantyStartDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">保修结束日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker disabled v-model="warrantyEndDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">安装位置:</span>
+                            <div class="inputBox">
+                                <el-select disabled v-model="installPosition" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in installPositions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备序列号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="equipmentSeqNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+            <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">表钢号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="steelNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">磁卡软件版本号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="softwareNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">建造类:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="build" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">建造类描述:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="buildCon" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">登记组:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="reginGroup" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">登记组描述:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="reginGroupCon" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">插卡方向:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="cardLine" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">进气方向:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="intakeLine" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">表间距:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="tableSpace" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+        </el-card>
+        <!-- 配件信息 -->
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>配件信息</span>
+                <el-row style="display: inline-block;float:right;margin-bottom: 0;margin-top: -10px">
+                    <el-button type="primary" icon="el-icon-arrow-down" v-if='this.partsDown' @click='handlePartsDown'>点击查看配件信息</el-button>
+                    <el-button type="primary" icon="el-icon-arrow-up" v-if='this.partsUp' @click='handlePartsUp'>点击收回配件信息</el-button>
+                </el-row>
+            </div>
+            <div v-if='tableIsshow'>
+                <template>
+                    <el-table  :data="tableData"  border  style="width: 100%">
+                      <el-table-column fixed prop="date" label="配件编码"></el-table-column>
+                      <el-table-column prop="name" label="配件名称"></el-table-column>
+                      <el-table-column prop="province" label="配件状态"></el-table-column>
+                      <el-table-column prop="city" label="销售商"></el-table-column>
+                      <el-table-column prop="address" label="保修开始日期"></el-table-column>
+                      <el-table-column prop="zip" label="保修结束日期"> </el-table-column>
+                      <el-table-column prop="zip" label="安装日期"> </el-table-column>
+                      <el-table-column label="操作">
+                        <template slot-scope="scope">
+                          <el-button type="text" size="small">编辑</el-button>
+                        </template>
+                      </el-table-column>
+                    </el-table>
+                </template>                        
+            </div>
+        </el-card> 
+        <!-- 编辑表计 -->
+        <el-dialog title="编辑表计" :visible.sync="editWatchNeedle" width='90%'>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备编号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="equipmentNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房产:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="house" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">合约:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="contract" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+            <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">物料编号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="materialNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备描述:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="deviceDesc" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备状态:</span>
+                            <div class="inputBox">
+                                <el-select v-model="equipmentState" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in equipmentStates"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备类型:</span>
+                            <div class="inputBox">
+                                <el-select disabled v-model="equipmentType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in equipmentTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">生产厂家:</span>
+                            <div class="inputBox">
+                                <el-input v-model="manufacturer" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">生产日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="productionDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">安装日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="installDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">保修开始日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="warrantyStartDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">保修结束日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="warrantyEndDate" type="date" placeholder="选择日期"></el-date-picker>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">安装位置:</span>
+                            <div class="inputBox">
+                                <el-select v-model="installPosition" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in installPositions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">设备序列号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="equipmentSeqNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+            <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">表钢号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="steelNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">磁卡软件版本号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="softwareNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">建造类:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="build" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">建造类描述:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="buildCon" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">登记组:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="reginGroup" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">登记组描述:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="reginGroupCon" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">插卡方向:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="cardLine" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">进气方向:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="intakeLine" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">表间距:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="tableSpace" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="handleWatchNeedleEditCanle">取 消</el-button>
+                <el-button type="primary" @click="handleWatchNeedleEditSure">确 定</el-button>
+            </div> 
+        </el-dialog>
+        <!-- 修改物料 -->
+        <el-dialog title="修改物料" :visible.sync="changerWatchNeedle" width='75%'>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">表计编码:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="changeMeter.tableMeterCode" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">表计物料号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="changeMeter.mateNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">物料描述:</span>
+                            <div class="inputBox">
+                                <el-input v-model="changeMeter.mateCon" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">表底数:</span>
+                            <div class="inputBox">
+                                <el-input v-model="changeMeter.tableNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">登记组:</span>
+                            <div class="inputBox">
+                                <el-input v-model="changeMeter.segisGroup" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">登记组描述:</span>
+                            <div class="inputBox">
+                                <el-input v-model="changeMeter.segisGroupCon" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">建造类:</span>
+                            <div class="inputBox">
+                                <el-input v-model="changeMeter.buildClass" placeholder="请输入内容"></el-input>
+                            </div> 
+                        </div>
+                    </el-col>
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">建造类描述:</span>
+                            <div class="inputBox">
+                                <el-input v-model="changeMeter.buildClassCon" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">磁卡软件版本号:</span>
+                            <div class="inputBox">
+                                <el-input v-model="changeMeter.softNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="12">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">更改日期:</span>
+                            <div class="inputBox">
+                                <el-input v-model="changeMeter.changeDate" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="handleChangeWatchCanel">取 消</el-button>
+                <el-button type="primary" @click="handleChangeWatchSure">确 定</el-button>
+            </div> 
+        </el-dialog>     
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+            equipmentNum:'',   // 设备编号
+            house:'',             //房产
+            contract:'',    //合约
+            materialNum:'',    //物料编号
+            deviceDesc:'',    //设备描述
+            equipmentState:'',   //设备状态
+            equipmentStates:[],  //设备状态下拉列表数据
+            equipmentType:'',  //设备类型
+            equipmentTypes:[],   //设备类型下拉列表数据
+            manufacturer:'',    //生产厂家
+            productionDate:'',   //生产日期
+            installDate:'',  //安装日期
+            warrantyStartDate:'',   //保修开始日期
+            warrantyEndDate:'',    //保修结束日期
+            installPosition:'',       //安装位置
+            installPositions:[],   //安装位置下拉列表位置
+            equipmentSeqNum:'',    //设备序列号
+            steelNum:'',           //表钢号
+            softwareNum:'',         //磁卡软件版本号
+            build:'',      //建造类
+            buildCon:'',      //建造类描述
+            reginGroup:'',    //登记组
+            reginGroupCon:'',    //登记组描述
+            cardLine:'',    //插卡方向
+            intakeLine:'',   //进气防线
+            tableSpace:'',      //表间距
+            tableIsshow:false,        //控制配件表格显示隐藏
+
+            partsDown:true,        //控制下拉按钮显示隐藏
+            partsUp:false,      //控制收回按钮显示隐藏
+            editWatchNeedle:false,         //控制编辑表计弹出窗显示隐藏
+            changerWatchNeedle:false,      //控制更改物料弹出窗显示隐藏
+
+            changeMeter:{
+                tableMeterCode:'',      //表针编码
+                mateNum:'',      //表针物料号
+                mateCon:'',      //物料描述
+                tableNum:'',      //表底数
+                segisGroup:'',      //登记组
+                segisGroupCon:'',      //登记组描述
+                buildClass:'',      //建造类
+                buildClassCon:'',      //建造类描述
+                softNum:'',      //磁卡软件版本号
+                changeDate:'',      //更该日期
+            }           
+        }
+      },
+      methods: {
+        handlePartsDown:function(){     //点击配件内容展开
+            this.tableIsshow = true;
+            this.partsDown = false;
+            this.partsUp = true;
+        },
+        handlePartsUp:function(){     //点击配件内容收回
+            this.tableIsshow = false;
+            this.partsDown = true;
+            this.partsUp = false;
+        },
+        handleEditWatchNeedle:function(){      // 点击编辑表计弹窗显示隐藏
+            this.editWatchNeedle = true; 
+        },
+        handleWatchNeedleEditCanle:function(){    //点击编辑表针弹窗取消按钮
+            this.editWatchNeedle = false;
+        },
+        handleWatchNeedleEditSure:function(){    //点击编辑表针弹窗确定按钮
+            this.editWatchNeedle = false;
+        },
+        handleChangerWatchNeedle:function(){   //点击更改物料弹窗显示隐藏
+            this.changerWatchNeedle = true;
+        },
+        handleChangeWatchCanel:function(){      //点击更改物料弹窗取消按钮
+            this.changerWatchNeedle = false;
+        },
+        handleChangeWatchSure:function(){        //点击更改物料弹窗确定按钮
+            this.changerWatchNeedle = false;
+        },
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

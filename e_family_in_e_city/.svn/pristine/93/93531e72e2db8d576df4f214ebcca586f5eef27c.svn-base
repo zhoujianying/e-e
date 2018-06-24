@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <h2 style="font-weight: 400">用户查询</h2>
+    <hr/>
+    <div id='app'>
+        <el-row :gutter="20">
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">城市:</span>
+                    <div class="inputBox">
+                        <el-select v-model="value" placeholder="请选择">
+                                <el-option
+                                    v-for="item in citys"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                        </el-select>
+                    </div>                   
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">姓名:</span>
+                    <div class="inputBox">
+                        <el-input v-model="name" placeholder="请输入内容"></el-input>
+                    </div>                   
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">街道：</span>
+                    <div class="inputBox">
+                        <el-select v-model="street" placeholder="请选择">
+                                <el-option
+                                    v-for="item in streets"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">小区:</span>
+                    <div class="inputBox">
+                        <el-select v-model="quarters" placeholder="请选择">
+                                <el-option
+                                    v-for="item in quarterss"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">联系电话:</span>
+                    <div class="inputBox">
+                        <el-input v-model="tel" placeholder="请输入内容"></el-input>
+                    </div>      
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">楼栋:</span>
+                    <div class="inputBox">
+                        <el-select v-model="building" placeholder="请选择">
+                                <el-option
+                                    v-for="item in buildings"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">单元:</span>
+                    <div class="inputBox">
+                        <el-input v-model="unit" placeholder="请输入内容"></el-input>
+                    </div>     
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">房间号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="roomNum" placeholder="请输入内容"></el-input>
+                    </div>     
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">客户标签:</span>
+                    <div class="inputBox">
+                        <el-select v-model="customerLabe" placeholder="请选择">
+                                <el-option
+                                    v-for="item in customerLabes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">房间标签:</span>
+                    <div class="inputBox">
+                        <el-select v-model="roomLabe" placeholder="请选择">
+                                <el-option
+                                    v-for="item in roomLabes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="8" :offset="4">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-button v-if='btnArrowDown' @click='slideDown' type="primary" icon="el-icon-arrow-down">点击根据用户的编码进行查询</el-button>
+                            <el-button v-if='btnArrowUp' @click='slideUp' type="primary" icon="el-icon-arrow-up">收起编号查询列表</el-button>
+                        </el-row>
+                    </div>
+                </el-col>
+        </el-row>
+        <!-- 点击展开的部分 -->
+        <el-row :gutter="20" v-if='slideConIsShow'>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">房产编号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="houseNum" placeholder="请输入内容"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">合同编号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="contractNumber" placeholder="请输入内容"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">客户编号:</span>
+                    <div class="inputBox">
+                         <el-input v-model="customerNumber" placeholder="请输入内容"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">卡号类型:</span>
+                    <div class="inputBox">
+                        <el-select v-model="cardNumberType" placeholder="请选择">
+                                <el-option
+                                    v-for="item in cardNumberTypes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">房卡号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="cardNumber" placeholder="请输入内容"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">表钢号:</span>
+                    <div class="inputBox">
+                         <el-input v-model="tableSteelNumber" placeholder="请输入内容"></el-input>
+                    </div>
+                </div>
+            </el-col>
+        </el-row>
+        <!-- 点击查询和取消的按钮 -->
+        <div>
+            <el-row>
+                <el-button type="primary" @click='query'>查询</el-button>
+                <el-button type="primary">取消</el-button>
+            </el-row>
+        </div>
+        <!-- 点击按钮跳转 -->
+        <div>
+            <el-row>
+                <el-button type="primary">用户创建</el-button>
+                <el-button type="primary">批量创建</el-button>
+                <el-button type="primary">过户</el-button>
+                <el-button type="primary">导入客户标签</el-button>
+                <el-button type="primary">导入房产标签</el-button>
+                <el-button type="primary">导出</el-button>
+              </el-row>
+        </div>
+        <!-- 表格 -->
+        <div v-if='tabIsshow'>
+            <template>
+                <el-table
+                    ref="multipleTable"
+                    :data="tableData"
+                    tooltip-effect="dark"
+                    style="width: 100%"
+                    border='true'
+                    row-click='handleUserInfor(row, event, column)'
+                    @selection-change="handleSelectionChange">
+                        <el-table-column type="selection"></el-table-column>
+                        <el-table-column prop="name" label="城市"></el-table-column>
+                        <el-table-column prop="name" label="房产地址"></el-table-column>
+                        <el-table-column prop="address" label="房产编码"></el-table-column>
+                        <el-table-column prop="address" label="户主姓名"></el-table-column>
+                        <el-table-column prop="address" label="户主联系方式"></el-table-column>
+                        <el-table-column prop="address" label="户主编码"></el-table-column>
+                        <el-table-column prop="address" label="房产状态"></el-table-column>
+                        <el-table-column prop="address" label="客户标签"></el-table-column>
+                        <el-table-column prop="address" label="房产标签"></el-table-column>
+                        <el-table-column prop="address" label="房产创建时间"></el-table-column>
+                </el-table>
+            </template>
+        </div>
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+            btnArrowDown:true,  //控制展开按钮显示隐藏
+            btnArrowUp:false,   //控制收回按钮显示隐藏
+            slideConIsShow:false,   //控制展开部分的显示隐藏
+            tabIsshow:false,       //控制表格默认不显示
+            visible: false,
+            checked : true,
+            input: '',
+            citys: [{ value: '选项1', label: '黄金糕'},  //城市列表数据
+                 {value: '选项2',label: '双皮奶'},
+                 {value: '选项3',label: '蚵仔煎'}, 
+                 { value: '选项4',label: '龙须面'}, 
+                 {value: '选项5',label: '北京烤鸭'}
+            ],
+            streets:[{ value: '选项1', label: '黄金糕'}],   //街道下拉列表数据
+            quarterss:[{ value: '选项1', label: '黄金糕'}],     //小区下拉列表数据 
+            buildings:[{ value: '选项1', label: '黄金糕'}],     //楼栋下拉列表数据   
+            customerLabes:[{ value: '选项1', label: '黄金糕'}],   //客户标签下拉列表数据 
+            roomLabes:[{ value: '选项1', label: '黄金糕'}],     //房间标签下拉列表数据
+            cardNumberTypes:[{ value: '选项1', label: '黄金糕'}],    // 卡号类型下拉列表数据
+            value: '',    //城市
+            name:'',    //姓名
+            street:'',   //街道
+            quarters:'', //小区
+            tel:'',   //电话
+            building:'',   //楼栋
+            unit:'',   //单元
+            roomNum:'',  //房间号
+            customerLabe:'',  // 客户标签
+            roomLabe:'',   //房间标签
+            houseNum:'',   //房产编号
+            contractNumber:'',  //合同编号
+            customerNumber:'',   //客户编号
+            cardNumberType:'',  //卡号类型
+            cardNumber:'',   //房卡号
+            tableSteelNumber:'',   //表钢号
+            tableData: [{
+                date: '2016-05-03',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }],
+        }
+      },
+      methods: {
+        slideDown:function(){        //点击展开按钮
+            this.btnArrowDown = false;
+            this.btnArrowUp = true;
+            this.slideConIsShow = true;
+        },
+        slideUp:function(){           //点击编号查询列表收回
+            this.btnArrowDown = true;
+            this.btnArrowUp = false;
+            this.slideConIsShow = false;
+        },
+        query:function(){          //点击查询按钮查询
+            this.tabIsshow = true
+        },
+        handleUserInfor:function(row, event, column){    //点击表格的每一行进入用户信息显示界面
+            
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

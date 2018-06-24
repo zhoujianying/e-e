@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../style/public.css">
+  </head>
+  <body class="body">
+    <div id='app'>
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>隐患信息</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">整改状态:</span>
+                            <div class="inputBox">
+                                <el-select v-model="status" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in statuss"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">整改归属:</span>
+                            <div class="inputBox">
+                                <el-select v-model="ascription" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in ascriptions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">地址:</span>
+                            <div class="inputBox">
+                                <el-select v-model="addres" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in address"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <el-button type="primary" @click='handleSecurityRecord'>查 询</el-button>          
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+            <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+            <div v-if='table'>
+                <template>
+                    <el-table :data="tableData"  border  style="width: 100%">
+                        <el-table-column prop="date" label="隐患编码"></el-table-column>
+                        <el-table-column prop="name" label="地址"></el-table-column>
+                        <el-table-column prop="province" label="隐患类别"></el-table-column>
+                        <el-table-column prop="city" label="隐患内容"></el-table-column>
+                        <el-table-column prop="address" label="隐患登级"></el-table-column>
+                        <el-table-column prop="zip" label="整改状态"> </el-table-column>
+                        <el-table-column prop="zip" label="整改归属"> </el-table-column>
+                        <el-table-column prop="zip" label="发现日期"> </el-table-column>
+                        <el-table-column prop="zip" label="发现人"> </el-table-column>
+                        <el-table-column prop="date" label="发现订单"></el-table-column>
+                        <el-table-column prop="name" label="限改日期"></el-table-column>
+                        <el-table-column prop="province" label="完成确认日期"></el-table-column>
+                        <el-table-column prop="city" label="完成确认人"></el-table-column>
+                        <el-table-column prop="address" label="完成确认订单"></el-table-column>
+                    </el-table>
+                </template>                       
+            </div>
+        </el-card>
+    </div>   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+            status:'',    //整改状态
+            statuss:[],     //整改状态下拉列表数据
+            ascription:'',       //整改归属
+            ascriptions:[],       //整改归属下拉列表数据
+            addres:'',   //地址
+            address:[],      //地址下拉列表数据
+
+            table:false,     //控制表格显示隐藏
+        }
+      },
+      methods: {
+        handleSecurityRecord:function(){
+            this.table = true
+        },
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

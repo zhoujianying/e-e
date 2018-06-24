@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <h2 style="font-weight: 400">县区创建</h2>
+    <div id='app'>
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>新建县区</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="12">
+                        <el-row :gutter="20">
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">城市:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                      <el-select v-model="created.city" placeholder="请选择">
+                                          <el-option
+                                              v-for="item in created.citys"
+                                              :key="item.value"
+                                              :label="item.label"
+                                              :value="item.value">
+                                          </el-option>
+                                      </el-select>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">区/县名称:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="created.conty" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">原城市ID:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="created.cityId" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">标准编码:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="created.cityCode" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">经度:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="created.longitude" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">纬度:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="created.latitude" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">状态:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                          <el-select v-model="created.status" placeholder="请选择">
+                                              <el-option
+                                                  v-for="item in created.statuss"
+                                                  :key="item.value"
+                                                  :label="item.label"
+                                                  :value="item.value">
+                                              </el-option>
+                                          </el-select>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">服务热线:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="created.tel" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="16">
+                                <div class="grid-content bg-purple" style="display:flex; justify-content: center;">
+                                    <el-button type="primary" @click='handleQuery'>保存</el-button>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-row :gutter="20">
+                          
+                        </el-row>
+                    </el-col>
+                   
+                </el-row>       
+            </div>
+        </el-card> 
+        <el-card class="box-card" style="margin-top: 20px">
+            <div slot="header" class="clearfix">
+                <span>编辑县区</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="12">
+                        <el-row :gutter="20">
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">县区编码:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input disabled v-model="edit.contyCode" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">城市:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-select disabled v-model="edit.city" placeholder="请选择">
+                                            <el-option
+                                                v-for="item in edit.citys"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                            </el-option>
+                                        </el-select>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">县区名称:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="edit.contyName" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">原城市ID:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="edit.cityId" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">服务热线:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="edit.tel" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">标准县区编码:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="edit.mallContyCode" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">经度:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="edit.longitude" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">纬度:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                        <el-input v-model="edit.latitude" placeholder="请输入内容"></el-input>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content bg-purple">
+                                    <span class="laber" style="flex: 3">状态:</span>
+                                    <div class="inputBox" style="flex: 5">
+                                          <el-select v-model="edit.status" placeholder="请选择">
+                                              <el-option
+                                                  v-for="item in edit.statuss"
+                                                  :key="item.value"
+                                                  :label="item.label"
+                                                  :value="item.value">
+                                              </el-option>
+                                          </el-select>
+                                    </div>                   
+                                </div>
+                            </el-col>
+                            <el-col :span="16">
+                                <div class="grid-content bg-purple" style="display:flex; justify-content: center;">
+                                    <el-button type="primary" @click='handleQueryEdit'>保存</el-button>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-row :gutter="20">
+                          
+                        </el-row>
+                    </el-col>
+                   
+                </el-row>       
+            </div>
+        </el-card> 
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+           created:{
+            city:'',  //城市 
+            citys:[],      //城市下拉列表数据
+            conty:'',    //县区名称
+            cityId:'',   //原城市id 
+            cityCode:'',     //标准编码
+            longitude:'',      //经度
+            latitude:'',       //纬度           
+            status:'',       //状态
+            statuss:'',          //状态下拉列表数据
+            tel:'',      //服务热线
+           },
+           edit:{
+            contyCode:'',   // 县区编码
+            city:'',  //城市
+            citys:[],      //城市下拉列表数据
+            contyName:'',   //县区名称
+            cityId:'',        //城市ID
+            tel:'',         //服务热线
+            mallContyCode:'',    //标准县区编码
+            longitude:'',      //经度
+            latitude:'',       //纬度
+            status:'',       //状态
+            statuss:'',          //状态下拉列表数据
+           }
+        }
+      },
+      methods: {
+        handleQuery:function(){       //新建城市保存
+
+        },
+        handleQueryEdit:function(){           //编辑城市保存
+
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

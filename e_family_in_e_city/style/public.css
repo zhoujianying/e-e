@@ -1,0 +1,51 @@
+.el-row {
+    margin-bottom: 20px;
+}
+.el-col {
+    border-radius: 4px;
+}
+.bg-purple-dark {
+    background: #99a9bf;
+}
+.bg-purple {
+    margin-bottom: 20px;
+}
+.bg-purple-light {
+    background: #e5e9f2;
+}
+.grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+}
+.laber{
+    line-height: 40px;
+    flex: 4
+}
+.inputBox{
+    flex: 9
+}
+.key{
+    line-height: 40px;
+    flex: 4
+}
+.value{
+    line-height: 40px;
+    flex: 6
+}
+.el-select{
+    display: block
+}
+.body{
+    padding: 0 20px
+}
+/* 日期表单样式 */
+.el-date-editor.el-input, .el-date-editor.el-input__inner{    
+    width: 100%;
+}

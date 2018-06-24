@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../style/public.css">
+  </head>
+  <body class="body">
+    <div id='app'>
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>房产编号：{{houseNumber}}</span>
+                <el-row style="display: inline-block; float:right; margin-bottom: 0;margin-top: -10px">
+                    <el-button  type="primary" @click="dialogFormVisible = true">修改地址</el-button>
+                    <el-button type="primary" @click="dialogFormVisibleEdit = true">编辑</el-button>
+                </el-row>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房间类型:</span>
+                            <div class="inputBox">
+                                <el-select v-model="roomType" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in roomTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">置换状态:</span>
+                            <div class="inputBox">
+                                <el-select v-model="replacementState" placeholder="请选择">
+                                        <el-option
+                                            v-for="item in replacementStates"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房产标签:</span>
+                            <div class="inputBox">
+                                <el-select v-model="propertyLabel" placeholder="请选择">
+                                        <el-option
+                                            v-for="item in propertyLabels"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">城市:</span>
+                            <div class="inputBox">
+                                <el-select v-model="city" placeholder="请选择">
+                                        <el-option
+                                            v-for="item in citys"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">行政区:</span>
+                            <div class="inputBox">
+                                <el-select v-model="administrativeArea" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in administrativeAreas"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">县:</span>
+                            <div class="inputBox">
+                                <el-select v-model="county" placeholder="请选择">
+                                        <el-option
+                                            v-for="item in countys"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">乡镇:</span>
+                            <div class="inputBox">
+                                <el-select v-model="town" placeholder="请选择">
+                                        <el-option
+                                            v-for="item in towns"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">街道:</span>
+                            <div class="inputBox">
+                                <el-select v-model="street" placeholder="请选择">
+                                        <el-option
+                                            v-for="item in streets"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">小区:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="residentialQuarters" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">楼栋:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="building" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">单元:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="unit" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房间号:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="roomNum" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房产备注:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="realEstateNotes" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">房产状态:</span>
+                            <div class="inputBox">
+                                <el-select v-model="propertyStatus" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in propertyStatuss"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+    </el-card>
+    <!-- 修改地址弹出框 -->
+    <el-dialog title="修改地址" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+            <el-form-item label="街道" :label-width="formLabelWidth">
+                <el-select v-model="form.street" placeholder="请选择活动区域">
+                    <el-option
+                        v-for="item in form.streets"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="小区/行政村" :label-width="formLabelWidth">
+                <el-select v-model="form.quarters" placeholder="请选择活动区域">
+                    <el-option
+                        v-for="item in form.quarterss"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="楼栋" :label-width="formLabelWidth">
+                <el-select v-model="form.building" placeholder="请选择活动区域">
+                    <el-option
+                        v-for="item in form.buildings"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="单元" :label-width="formLabelWidth">
+                <el-input v-model="form.unit" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="房间号" :label-width="formLabelWidth">
+                <el-input v-model="form.roomNum" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="info" @click="handleDialogCance">关 闭</el-button>
+            <el-button type="danger" @click="handleDialogDeposit">保 存</el-button>
+        </div>
+    </el-dialog>
+    <!-- 点击编辑弹出框 -->
+    <el-dialog title="编辑" :visible.sync="dialogFormVisibleEdit">
+            <el-form :model="form">
+                <el-form-item label="房产编号" :label-width="formLabelWidth">
+                    <el-input v-model="formEdit.houseNum" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="房产有效状态" :label-width="formLabelWidth">
+                    <el-select v-model="formEdit.realEstateStatus" placeholder="请选择活动区域">
+                        <el-option
+                            v-for="item in formEdit.realEstateStatuss"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="房间类型" :label-width="formLabelWidth">
+                    <el-select v-model="formEdit.houseType" placeholder="请选择活动区域">
+                        <el-option
+                            v-for="item in formEdit.houseTypes"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="房产状态" :label-width="formLabelWidth">
+                    <el-select v-model="formEdit.propertyStatus" placeholder="请选择活动区域">
+                        <el-option
+                            v-for="item in formEdit.propertyStatuss"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="房产标签" :label-width="formLabelWidth">
+                    <el-input v-model="formEdit.houserLaber" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="房产备注" :label-width="formLabelWidth">
+                    <el-input v-model="formEdit.houseNotes" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button type='info' @click="handleDialogCanceEdit">关 闭</el-button>
+                <el-button type="danger" @click="handleDialogDepositEdit">保 存</el-button>
+            </div>
+        </el-dialog>
+
+       
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+          houseNumber:'',    //房产编号
+            roomType:'',   //房间类型
+            roomTypes:[],  //房间类型下拉列表数据
+            replacementState:'',   //置换状态
+            replacementStates:[],  //置换状态下拉列表数据
+            propertyLabel:'',   //房产标签
+            propertyLabels:[],   //房产标签下拉列表数据
+            city:'',   //城市
+            citys:[],   //城市下拉列表数据
+            administrativeArea:'',  //行政区
+            administrativeAreas:[],  //行政区下拉列表数据
+            county:'',    //县
+            countys:[],   //县的下拉列表数据
+            town:'',  //乡镇
+            towns:[],  //乡镇下拉列表数据
+            street:'',   //街道
+            streets:[],   //街道下拉列表数据
+            residentialQuarters:'',   //小区
+            building:'',  //楼栋
+            unit:'',  //单元
+            roomNum:'',   //房间号
+            realEstateNotes:'',   //房产备注
+            propertyStatus:'', //房产状态
+            propertyStatuss:[],   //房产状态下拉列表数据
+            dialogFormVisible: false,   //控制修改地址弹出框显示隐藏
+            form: {             //修改地址弹出框
+                street:'',   //街道
+                street:[],   //街道下拉列表数据
+                quarters:'',  //小区，行政村
+                quarterss:[],   //小区，行政村下拉列表数据
+                building:'',    //楼栋
+                buildings:[],   //楼栋下拉列表数据
+                unit:'',   //单元
+                roomNum:'',  //房间号
+            },
+            formLabelWidth: '120px',      //修改地址输入框宽度
+            dialogFormVisibleEdit: false,   //控制修改地址弹出框显示隐藏
+            formEdit: {             //修改地址弹出框
+                houseNum:'',   //房产编号
+                realEstateStatus:'',   //房产有效状态
+                realEstateStatuss:[],   //房产有效状态下拉列表状态
+                houseType:'',   //房间类型
+                houseTypes:[],   //房间类型下拉列表数据
+                propertyStatus:'',   //房产状态
+                propertyStatuss:[],   // 房产状态下拉列表数据
+                houserLaber:'',   //房产标签
+                houseNotes:'',   //房产备注
+            },
+        }
+      },
+      methods: {
+        handleDialogCance:function(){    //点击修改地址弹出窗关闭按钮
+            this.dialogFormVisible = false;
+        },
+        handleDialogDeposit:function(){    //点击修改地址弹出窗保存按钮
+            this.dialogFormVisible = false;
+        },
+        handleDialogCanceEdit:function(){    //点击修改地址弹出窗关闭按钮
+            this.dialogFormVisibleEdit = false;
+        },
+        handleDialogDepositEdit:function(){    //点击修改地址弹出窗保存按钮
+            this.dialogFormVisibleEdit = false;
+        },
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

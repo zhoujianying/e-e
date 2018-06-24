@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <h2 style="font-weight: 400">用户查询</h2>
+    <hr/>
+    <div id='app'>
+        <el-row :gutter="20">
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">城市:</span>
+                    <div class="inputBox">
+                        <el-select @change='handleCityChose' v-model="cityId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in citys"
+                                    :key="item.cityId"
+                                    :label="item.cityName"
+                                    :value="item.cityName">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">街道：</span>
+                    <div class="inputBox">
+                        <el-select v-model="streetId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in streets"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">小区:</span>
+                    <div class="inputBox">
+                        <el-select v-model="communityId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in quarterss"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">楼栋:</span>
+                    <div class="inputBox">
+                        <el-select v-model="building" placeholder="请选择">
+                            <el-option
+                                    v-for="item in buildings"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">单元:</span>
+                    <div class="inputBox">
+                        <el-input v-model="houseUnit" placeholder="请输入单元"></el-input>
+                    </div>
+                </div>
+            </el-col>
+    
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">房间号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="roomNo" placeholder="请输入房间号"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">房产编码:</span>
+                    <div class="inputBox">
+                        <el-input v-model="sourceHouseCodeNo" placeholder="请输入原房产编码"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">姓名:</span>
+                    <div class="inputBox">
+                        <el-input v-model="name" placeholder="请输入内客户姓名"></el-input>
+                    </div>
+                </div>
+            </el-col>
+    
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">手机:</span>
+                    <div class="inputBox">
+                        <el-input v-model="cellphone1" placeholder="请输入手机"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">客户编号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="customerCodeNo" placeholder="请输入原系统客户编号"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">表计序列号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="meterSerialNo" placeholder="请输入表计序列号"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">表钢号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="realSteelGrade" placeholder="请输入表钢号"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">合同:</span>
+                    <div class="inputBox">
+                        <el-input v-model="contractNo" placeholder="请输入合同号"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">置换状态:</span>
+                    <div class="inputBox">
+                        <el-select v-model="displaceStatus" placeholder="请选择">
+                            <el-option
+                                    v-for="item in displaceStatuss"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">客户标签:</span>
+                    <div class="inputBox">
+                        <el-select v-model="customerLabelId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in customerLabes"
+                                    :key="item.value"
+                                    :label="item.cityName"
+                                    :value="item.cityName">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">房产标签:</span>
+                    <div class="inputBox">
+                        <el-select v-model="housePropertyLabelId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in roomLabes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+        </el-row>
+        <!-- 点击查询和取消的按钮 -->
+        <div>
+            <el-row>
+                <el-button type="primary" @click='query'>查询</el-button>
+                <el-button type="primary">取消</el-button>
+            </el-row>
+        </div>
+        <!-- 点击按钮跳转 -->
+        <div>
+            <el-row>
+                <el-button type="primary">用户创建</el-button>
+                <el-button type="primary">批量创建</el-button>
+                <el-button type="primary">过户</el-button>
+                <el-button type="primary">导入客户标签</el-button>
+                <el-button type="primary">导入房产标签</el-button>
+                <el-button type="primary">导出</el-button>
+              </el-row>
+        </div>
+        <!-- 表格 -->
+        <div v-if='tabIsshow'>
+            <template>
+                <el-table
+                    ref="multipleTable"
+                    :data="tableData"
+                    tooltip-effect="dark"
+                    style="width: 100%"
+                    border='true'
+                    row-click='handleUserInfor(row, event, column)'
+                    @selection-change="handleSelectionChange">
+                        <el-table-column type="selection"></el-table-column>
+                        <el-table-column prop="name" label="城市"></el-table-column>
+                        <el-table-column prop="name" label="房产地址"></el-table-column>
+                        <el-table-column prop="address" label="房产编码"></el-table-column>
+                        <el-table-column prop="address" label="户主姓名"></el-table-column>
+                        <el-table-column prop="address" label="户主联系方式"></el-table-column>
+                        <el-table-column prop="address" label="户主编码"></el-table-column>
+                        <el-table-column prop="address" label="房产状态"></el-table-column>
+                        <el-table-column prop="address" label="客户标签"></el-table-column>
+                        <el-table-column prop="address" label="房产标签"></el-table-column>
+                        <el-table-column prop="address" label="房产创建时间"></el-table-column>
+                </el-table>
+            </template>
+            <div style="display: flex; justify-content: flex-end; margin-top: 20px">
+                <el-pagination
+                    @current-change='handlePage'
+                    :current-page=this.currentPage
+                    :page-size='10'
+                    background
+                    layout="prev, pager, next"
+                    :total=this.total>
+                </el-pagination>
+            </div>
+            
+        </div>
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+            currentPage:1,     //表格当前页数
+            total:10,           //表格总个数
+            slideConIsShow:false,   //控制展开部分的显示隐藏
+            tabIsshow:false,       //控制表格默认不显示
+            visible: false,
+            checked : true,
+            input: '',
+            citys: [{
+                "cityId": 2018,
+                "cityName": "廊坊",
+                "cityPinyin": "LANGFANG"
+            }, {
+                "cityId": 2020,
+                "cityName": "淮安",
+                "cityPinyin": "HUAIAN"
+            }, {
+                "cityId": 2021,
+                "cityName": "开封",
+                "cityPinyin": "KAIFENG"
+            }, {
+                "cityId": 2023,
+                "cityName": "洛阳",
+                "cityPinyin": "LUOYANG"
+            }, {
+                "cityId": 2024,
+                "cityName": "石家庄",
+                "cityPinyin": "SHIJIAZHUANG"
+            }, {
+                "cityId": 2025,
+                "cityName": "株洲",
+                "cityPinyin": "ZHUZHOU"
+            }, {
+                "cityId": 2026,
+                "cityName": "湘潭",
+                "cityPinyin": "XIANGTAN"
+            }, {
+                "cityId": 2029,
+                "cityName": "大连",
+                "cityPinyin": "DALIAN"
+            }, {
+                "cityId": 2030,
+                "cityName": "长沙",
+                "cityPinyin": "CHANGSHA"
+            }, {
+                "cityId": 2032,
+                "cityName": "辽宁",
+                "cityPinyin": "LIAONING"
+            }, {
+                "cityId": 2034,
+                "cityName": "太原",
+                "cityPinyin": "taiyuan"
+            }, {
+                "cityId": 2035,
+                "cityName": "成都",
+                "cityPinyin": "chendu"
+            }, {
+                "cityId": 2036,
+                "cityName": "东海",
+                "cityPinyin": "DONGHAI"
+            }, {
+                "cityId": 2038,
+                "cityName": "周口",
+                "cityPinyin": "ZHOUKOU"
+            }, {
+                "cityId": 2039,
+                "cityName": "北京",
+                "cityPinyin": "BEIJING"
+            }, {
+                "cityId": 2041,
+                "cityName": "新乡",
+                "cityPinyin": "XinXiang"
+            }, {
+                "cityId": 2042,
+                "cityName": "庄河",
+                "cityPinyin": "ZHUANGHE"
+            }, {
+                "cityId": 2045,
+                "cityName": "衡水",
+                "cityPinyin": "henghsui"
+            }, {
+                "cityId": 2046,
+                "cityName": "呼伦贝尔",
+                "cityPinyin": "HULUNBEIER"
+            }, {
+                "cityId": 2047,
+                "cityName": "合肥",
+                "cityPinyin": "HEFEI"
+            }, {
+                "cityId": 2050,
+                "cityName": "泉州",
+                "cityPinyin": "QUANZHOU"
+            }, {
+                "cityId": 2051,
+                "cityName": "烟台",
+                "cityPinyin": "YANTAI"
+            }, {
+                "cityId": 2052,
+                "cityName": "常州",
+                "cityPinyin": "CHANGZHOU"
+            }, {
+                "cityId": 2054,
+                "cityName": "桂林",
+                "cityPinyin": "GUILIN"
+            }, {
+                "cityId": 2055,
+                "cityName": "连云港",
+                "cityPinyin": "LIANYUNGANG"
+            }, {
+                "cityId": 2057,
+                "cityName": "运城",
+                "cityPinyin": "YUNCHENG"
+            }, {
+                "cityId": 2058,
+                "cityName": "亳州",
+                "cityPinyin": "BOZHOU"
+            }, {
+                "cityId": 2059,
+                "cityName": "蚌埠",
+                "cityPinyin": "BENGBU"
+            }, {
+                "cityId": 2066,
+                "cityName": "海南岛2",
+                "cityPinyin": "hainandao"
+            }, {
+                "cityId": 2067,
+                "cityName": "吐鲁番2",
+                "cityPinyin": "tulufan"
+            }, {
+                "cityId": 2068,
+                "cityName": "天水",
+                "cityPinyin": "TIANSHUI"
+            }, {
+                "cityId": 2076,
+                "cityName": "日照",
+                "cityPinyin": "RIZHAO"
+            }, {
+                "cityId": 2081,
+                "cityName": "沈阳",
+                "cityPinyin": "shenyang"
+            }, {
+                "cityId": 2090,
+                "cityName": "重庆",
+                "cityPinyin": "chongqing"
+            }, {
+                "cityId": 2106,
+                "cityName": "铁岭",
+                "cityPinyin": "tieling"
+            }, {
+                "cityId": 2107,
+                "cityName": "乌鲁木齐",
+                "cityPinyin": "wulumuqi"
+            }, {
+                "cityId": 2109,
+                "cityName": "武汉",
+                "cityPinyin": "wuhan"
+            }, {
+                "cityId": 2119,
+                "cityName": "天津",
+                "cityPinyin": "tianjin"
+            }, {
+                "cityId": 2122,
+                "cityName": "杭州",
+                "cityPinyin": "HANGZHOU"
+            }, {
+                "cityId": 2125,
+                "cityName": "建设银行测试",
+                "cityPinyin": "SY"
+            }, {
+                "cityId": 2128,
+                "cityName": "西安",
+                "cityPinyin": "XIAN"
+            }, {
+                "cityId": 2129,
+                "cityName": "邯郸",
+                "cityPinyin": "handan"
+            }, {
+                "cityId": 2131,
+                "cityName": "厦门",
+                "cityPinyin": "XIAMEN"
+            }, {
+                "cityId": 2137,
+                "cityName": "葫芦岛",
+                "cityPinyin": "huludao"
+            }, {
+                "cityId": 2140,
+                "cityName": "胶南",
+                "cityPinyin": "jiaonan"
+            }, {
+                "cityId": 2141,
+                "cityName": "滁州",
+                "cityPinyin": "chuzhou"
+            }, {
+                "cityId": 2142,
+                "cityName": "东莞长安",
+                "cityPinyin": "DGCA"
+            }, {
+                "cityId": 2144,
+                "cityName": "东莞测试",
+                "cityPinyin": "dongguan"
+            }, {
+                "cityId": 2146,
+                "cityName": "黄岛",
+                "cityPinyin": "huangdao"
+            }, {
+                "cityId": 2148,
+                "cityName": "青岛青岛",
+                "cityPinyin": "qingdaoqingdao"
+            }, {
+                "cityId": 2149,
+                "cityName": "灵山卫",
+                "cityPinyin": "lingshanwei"
+            }, {
+                "cityId": 2150,
+                "cityName": "广州",
+                "cityPinyin": "guangzhou"
+            }, {
+                "cityId": 2152,
+                "cityName": "东莞新奥-F",
+                "cityPinyin": "DG-F"
+            }, {
+                "cityId": 2154,
+                "cityName": "青岛天",
+                "cityPinyin": "QINGDAOTIAN"
+            }, {
+                "cityId": 2155,
+                "cityName": "青岛",
+                "cityPinyin": "QINGDAO"
+            }, {
+                "cityId": 2157,
+                "cityName": "青青青岛",
+                "cityPinyin": "qingqingqingdao"
+            }, {
+                "cityId": 2160,
+                "cityName": "东莞万江",
+                "cityPinyin": "dongguanwanjiang"
+            }, {
+                "cityId": 2161,
+                "cityName": "虎门",
+                "cityPinyin": "humen"
+            }, {
+                "cityId": 2163,
+                "cityName": "东莞厚街",
+                "cityPinyin": "dongguan"
+            }, {
+                "cityId": 2168,
+                "cityName": "喀什",
+                "cityPinyin": "kashi"
+            }, {
+                "cityId": 2174,
+                "cityName": "长春",
+                "cityPinyin": "changchun"
+            }, {
+                "cityId": 2177,
+                "cityName": "都江堰",
+                "cityPinyin": "dujiangyan"
+            }, {
+                "cityId": 2178,
+                "cityName": "不夜城",
+                "cityPinyin": "buyecheng"
+            }, {
+                "cityId": 2179,
+                "cityName": "信阳001",
+                "cityPinyin": "xinyang001"
+            }, {
+                "cityId": 2180,
+                "cityName": "信阳",
+                "cityPinyin": "XINYANG"
+            }, {
+                "cityId": 2181,
+                "cityName": "四平市",
+                "cityPinyin": "sipingshi"
+            }, {
+                "cityId": 2183,
+                "cityName": " 哈尔滨",
+                "cityPinyin": " heb"
+            }, {
+                "cityId": 2184,
+                "cityName": "鹿泉",
+                "cityPinyin": "luquan"
+            }, {
+                "cityId": 2187,
+                "cityName": "菏泽",
+                "cityPinyin": "HEZE"
+            }, {
+                "cityId": 2193,
+                "cityName": "驻马店",
+                "cityPinyin": "zhumadian"
+            }, {
+                "cityId": 2196,
+                "cityName": "河池市",
+                "cityPinyin": "sdff"
+            }, {
+                "cityId": 2199,
+                "cityName": "郑州",
+                "cityPinyin": "zhengzhou"
+            }, {
+                "cityId": 2200,
+                "cityName": "大霍营",
+                "cityPinyin": "dahuoying"
+            }, {
+                "cityId": 2201,
+                "cityName": "南京",
+                "cityPinyin": "nanjing"
+            }, {
+                "cityId": 2203,
+                "cityName": "武汉市123",
+                "cityPinyin": "WUHAN"
+            }, {
+                "cityId": 2206,
+                "cityName": "榆林",
+                "cityPinyin": "yulin"
+            }, {
+                "cityId": 2213,
+                "cityName": "徐州",
+                "cityPinyin": "xuzhou"
+            }, {
+                "cityId": 2215,
+                "cityName": "上海",
+                "cityPinyin": "shanghai"
+            }, {
+                "cityId": 2218,
+                "cityName": "秦皇岛",
+                "cityPinyin": "qinhuangdao"
+            }, {
+                "cityId": 2219,
+                "cityName": "宁波",
+                "cityPinyin": "ningbo"
+            }, {
+                "cityId": 2221,
+                "cityName": "正定",
+                "cityPinyin": "ZHENGDING"
+            }, {
+                "cityId": 2224,
+                "cityName": "嘉兴",
+                "cityPinyin": "lly"
+            }, {
+                "cityId": 2229,
+                "cityName": "青岛胶州",
+                "cityPinyin": "qingjiaozhou"
+            }, {
+                "cityId": 2231,
+                "cityName": "金华",
+                "cityPinyin": "jinhua"
+            }, {
+                "cityId": 2232,
+                "cityName": "萧山",
+                "cityPinyin": "xiaoshan"
+            }, {
+                "cityId": 2233,
+                "cityName": "鄞州",
+                "cityPinyin": "yinzhou"
+            }, {
+                "cityId": 2237,
+                "cityName": "兰州",
+                "cityPinyin": "LanZhou"
+            }, {
+                "cityId": 2238,
+                "cityName": "台州",
+                "cityPinyin": "taizhou"
+            }, {
+                "cityId": 2239,
+                "cityName": "衢州",
+                "cityPinyin": "Quzhou"
+            }, {
+                "cityId": 2240,
+                "cityName": "保定",
+                "cityPinyin": "baoding"
+            }, {
+                "cityId": 2245,
+                "cityName": "宝鸡",
+                "cityPinyin": "baoji"
+            }, {
+                "cityId": 2246,
+                "cityName": "文安",
+                "cityPinyin": "wenan"
+            }, {
+                "cityId": 2247,
+                "cityName": "高雄",
+                "cityPinyin": "GX"
+            }, {
+                "cityId": 2250,
+                "cityName": "城阳",
+                "cityPinyin": "chengyang"
+            }, {
+                "cityId": 2252,
+                "cityName": "包头",
+                "cityPinyin": "BaoTou"
+            }, {
+                "cityId": 2253,
+                "cityName": "牡丹江",
+                "cityPinyin": "mudanjiang"
+            }, {
+                "cityId": 2255,
+                "cityName": "大庆",
+                "cityPinyin": "daqing"
+            }, {
+                "cityId": 2256,
+                "cityName": "廊坊海信达",
+                "cityPinyin": ""
+            }],
+            streets:[{ value: '街道1', id: 1}, //街道下拉列表数据
+                     { value: '街道2', id: 2},  
+                     { value: '街道2', id: 3},
+                     { value: '街道2', id: 4},
+                     { value: '街道2', id: 5},
+                     { value: '街道2', id: 6},
+                     { value: '街道2', id: 7},
+                     { value: '街道2', id: 8},
+                     { value: '街道2', id: 9},
+                     { value: '街道2', id: 10},
+                     { value: '街道2', id: 11},
+                     { value: '街道2', id: 12},
+                     { value: '街道2', id: 13},
+                     { value: '街道2', id: 14},  
+            ],   
+            quarterss:[{ value: '小区1',id:1},  //小区下拉列表数据 
+                       { value: '小区2',id:2},      
+            ],     
+            buildings:[{ value: '楼栋1', id: 1},    //楼栋下拉列表数据   
+                       { value: '楼栋2', id: 2},
+            ],     
+            customerLabes:[{ value: '客户标签1', id: 1},    //客户标签下拉列表数据
+                           { value: '客户标签2', id: 2},
+            ],    
+            roomLabes:[{ value: '房间标签1', id: 1},   //房间标签下拉列表数据
+                       { value: '房间标签2', id: 2},
+            ],     
+            cardNumberTypes:[{ value: '卡号类型1', id: 1},    // 卡号类型下拉列表数据
+                             { value: '卡号类型2', id: 2},
+            ],    
+            displaceStatuss:[{ value: '卡号类型1', id: 1},    // 卡号类型下拉列表数据
+                             { value: '卡号类型2', id: 2},
+            ],
+            city: '',    //城市
+            cityId:'',     //选择城市id
+            name:'',    //姓名
+            street:'',   //街道
+            communityId:'', //小区
+            tel:'',   //电话
+            building:'',   //楼栋
+            unit:'',   //单元
+            roomNum:'',  //房间号
+            displaceStatus:'',   //置换状态
+            customerLabe:'',  // 客户标签
+            roomLabe:'',   //房间标签
+            housePropertyLabelId:'',   //房产编号
+            contractNumber:'',  //合同编号
+            customerNumber:'',   //客户编号
+            cardNumberType:'',  //卡号类型
+            cardNumber:'',   //房卡号
+            tableSteelNumber:'',   //表钢号
+            tableData: [{date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+            ],
+        }
+      },
+      methods: {
+        handleCityChose:function(e){        //点击下拉框选择城市
+        var that = this;
+            that.citys.forEach(function(item,index){
+                if(item.cityName == e){
+                    that.cityID = item.cityId
+                };
+            });
+            alert(that.cityID)
+        },
+        query:function(){          //点击查询按钮查询
+            this.tabIsshow = true;
+
+            axios.post('/user', {
+                pageNum:this.currentPage,
+                pageSize:10,
+                city: this.city,
+                name: this.name,
+                street:this.street,
+                quarters:this.quarters,
+                tel:this.tel,
+                building:this.building,
+                unit:this.unit,
+                roomNum:this.roomNum,
+                customerLabe:this.customerLabe,
+
+
+            })
+            .then(function (response) {
+                this.tableData = response.data.list;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        },
+        handleUserInfor:function(row, event, column){    //点击表格的每一行进入用户信息显示界面
+            
+        },
+        handlePage(e){   //分页事件
+          this.currentPage = e
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {})    //城市列表请求数据
+        .then(function (response) {
+            this.citys = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        
+        axios.post('/user', {})    //街道列表请求数据
+        .then(function (response) {
+            this.streets = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        
+        axios.post('/user', {})    //小区列表请求数据
+        .then(function (response) {
+            this.quarterss = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        axios.post('/user', {})    //楼栋列表请求数据
+        .then(function (response) {
+            this.buildings = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        axios.post('/user', {})    //客户标签列表请求数据
+        .then(function (response) {
+            this.customerLabes = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+         axios.post('/user', {})    //房间标签列表请求数据
+        .then(function (response) {
+            this.roomLabes = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        axios.post('/user', {})    //卡号类型列表请求数据
+        .then(function (response) {
+            this.cardNumberTypes = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

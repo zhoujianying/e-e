@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <h2 style="font-weight: 400">用户查询</h2>
+    <hr/>
+    <div id='app'>
+        <el-row :gutter="20">
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">城市:</span>
+                    <div class="inputBox">
+                        <el-select v-model="cityId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in citys"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">街道：</span>
+                    <div class="inputBox">
+                        <el-select v-model="streetId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in streets"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">小区:</span>
+                    <div class="inputBox">
+                        <el-select v-model="communityId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in quarterss"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">楼栋:</span>
+                    <div class="inputBox">
+                        <el-select v-model="building" placeholder="请选择">
+                            <el-option
+                                    v-for="item in buildings"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">单元:</span>
+                    <div class="inputBox">
+                        <el-input v-model="houseUnit" placeholder="请输入单元"></el-input>
+                    </div>
+                </div>
+            </el-col>
+    
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">房间号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="roomNo" placeholder="请输入房间号"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">房产编码:</span>
+                    <div class="inputBox">
+                        <el-input v-model="sourceHouseCodeNo" placeholder="请输入原房产编码"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">姓名:</span>
+                    <div class="inputBox">
+                        <el-input v-model="name" placeholder="请输入内客户姓名"></el-input>
+                    </div>
+                </div>
+            </el-col>
+    
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">手机:</span>
+                    <div class="inputBox">
+                        <el-input v-model="cellphone1" placeholder="请输入手机"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">客户编号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="customerCodeNo" placeholder="请输入原系统客户编号"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">表计序列号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="meterSerialNo" placeholder="请输入表计序列号"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">表钢号:</span>
+                    <div class="inputBox">
+                        <el-input v-model="realSteelGrade" placeholder="请输入表钢号"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">合同:</span>
+                    <div class="inputBox">
+                        <el-input v-model="contractNo" placeholder="请输入合同号"></el-input>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">置换状态:</span>
+                    <div class="inputBox">
+                        <el-select v-model="displaceStatus" placeholder="请选择">
+                            <el-option
+                                    v-for="item in displaceStatuss"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">客户标签:</span>
+                    <div class="inputBox">
+                        <el-select v-model="customerLabelId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in customerLabes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple">
+                    <span class="laber">房产标签:</span>
+                    <div class="inputBox">
+                        <el-select v-model="housePropertyLabelId" placeholder="请选择">
+                            <el-option
+                                    v-for="item in roomLabes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </el-col>
+        </el-row>
+        <!-- 点击查询和取消的按钮 -->
+        <div>
+            <el-row>
+                <el-button type="primary" @click='query'>查询</el-button>
+                <el-button type="primary">取消</el-button>
+            </el-row>
+        </div>
+        <!-- 点击按钮跳转 -->
+        <div>
+            <el-row>
+                <el-button type="primary">用户创建</el-button>
+                <el-button type="primary">批量创建</el-button>
+                <el-button type="primary">过户</el-button>
+                <el-button type="primary">导入客户标签</el-button>
+                <el-button type="primary">导入房产标签</el-button>
+                <el-button type="primary">导出</el-button>
+              </el-row>
+        </div>
+        <!-- 表格 -->
+        <div v-if='tabIsshow'>
+            <template>
+                <el-table
+                    ref="multipleTable"
+                    :data="tableData"
+                    tooltip-effect="dark"
+                    style="width: 100%"
+                    border='true'
+                    row-click='handleUserInfor(row, event, column)'
+                    @selection-change="handleSelectionChange">
+                        <el-table-column type="selection"></el-table-column>
+                        <el-table-column prop="name" label="城市"></el-table-column>
+                        <el-table-column prop="name" label="房产地址"></el-table-column>
+                        <el-table-column prop="address" label="房产编码"></el-table-column>
+                        <el-table-column prop="address" label="户主姓名"></el-table-column>
+                        <el-table-column prop="address" label="户主联系方式"></el-table-column>
+                        <el-table-column prop="address" label="户主编码"></el-table-column>
+                        <el-table-column prop="address" label="房产状态"></el-table-column>
+                        <el-table-column prop="address" label="客户标签"></el-table-column>
+                        <el-table-column prop="address" label="房产标签"></el-table-column>
+                        <el-table-column prop="address" label="房产创建时间"></el-table-column>
+                </el-table>
+            </template>
+            <div style="display: flex; justify-content: flex-end; margin-top: 20px">
+                <el-pagination
+                    @current-change='handlePage'
+                    :current-page=this.currentPage
+                    :page-size='10'
+                    background
+                    layout="prev, pager, next"
+                    :total=this.total>
+                </el-pagination>
+            </div>
+            
+        </div>
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+            currentPage:1,     //表格当前页数
+            total:10,           //表格总个数
+            slideConIsShow:false,   //控制展开部分的显示隐藏
+            tabIsshow:false,       //控制表格默认不显示
+            visible: false,
+            checked : true,
+            input: '',
+            citys: [{ value: '北京',id:1},  //城市列表数据
+                 {value: '上海',id:2},
+                 {value: '广州',id:3}, 
+                 { value: '深圳',id:4}, 
+                 {value: '郑州',id:5}
+            ],
+            streets:[{ value: '街道1', id: 1}, //街道下拉列表数据
+                     { value: '街道2', id: 2},    
+            ],   
+            quarterss:[{ value: '小区1',id:1},  //小区下拉列表数据 
+                       { value: '小区2',id:2},      
+            ],     
+            buildings:[{ value: '楼栋1', id: 1},    //楼栋下拉列表数据   
+                       { value: '楼栋2', id: 2},
+            ],     
+            customerLabes:[{ value: '客户标签1', id: 1},    //客户标签下拉列表数据
+                           { value: '客户标签2', id: 2},
+            ],    
+            roomLabes:[{ value: '房间标签1', id: 1},   //房间标签下拉列表数据
+                       { value: '房间标签2', id: 2},
+            ],     
+            cardNumberTypes:[{ value: '卡号类型1', id: 1},    // 卡号类型下拉列表数据
+                             { value: '卡号类型2', id: 2},
+            ],    
+            displaceStatuss:[{ value: '卡号类型1', id: 1},    // 卡号类型下拉列表数据
+                             { value: '卡号类型2', id: 2},
+            ],
+            city: '',    //城市
+            cityId:'',     //选择城市id
+            name:'',    //姓名
+            street:'',   //街道
+            communityId:'', //小区
+            tel:'',   //电话
+            building:'',   //楼栋
+            unit:'',   //单元
+            roomNum:'',  //房间号
+            displaceStatus:'',   //置换状态
+            customerLabe:'',  // 客户标签
+            roomLabe:'',   //房间标签
+            housePropertyLabelId:'',   //房产编号
+            contractNumber:'',  //合同编号
+            customerNumber:'',   //客户编号
+            cardNumberType:'',  //卡号类型
+            cardNumber:'',   //房卡号
+            tableSteelNumber:'',   //表钢号
+            tableData: [{date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+                        {date: '2016-05-03', name: '王小虎',address: '上海市普陀区金沙江路 1518 弄'},
+            ],
+        }
+      },
+      methods: {
+        handleCityChose:function(e){        //点击下拉框选择城市
+            this.citys.forEach((item,index)=>{
+                if(item.value == e){
+                    this.cityID = item.id
+                }
+            });
+        },
+        query:function(){          //点击查询按钮查询
+            this.tabIsshow = true;
+
+            axios.post('/user', {
+                pageNum:this.currentPage,
+                pageSize:10,
+                city: this.city,
+                name: this.name,
+                street:this.street,
+                quarters:this.quarters,
+                tel:this.tel,
+                building:this.building,
+                unit:this.unit,
+                roomNum:this.roomNum,
+                customerLabe:this.customerLabe,
+
+
+            })
+            .then(function (response) {
+                this.tableData = response.data.list;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        },
+        handleUserInfor:function(row, event, column){    //点击表格的每一行进入用户信息显示界面
+            
+        },
+        handlePage(e){   //分页事件
+          this.currentPage = e
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {})    //城市列表请求数据
+        .then(function (response) {
+            this.citys = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        
+        axios.post('/user', {})    //街道列表请求数据
+        .then(function (response) {
+            this.streets = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        
+        axios.post('/user', {})    //小区列表请求数据
+        .then(function (response) {
+            this.quarterss = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        axios.post('/user', {})    //楼栋列表请求数据
+        .then(function (response) {
+            this.buildings = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        axios.post('/user', {})    //客户标签列表请求数据
+        .then(function (response) {
+            this.customerLabes = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+         axios.post('/user', {})    //房间标签列表请求数据
+        .then(function (response) {
+            this.roomLabes = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        axios.post('/user', {})    //卡号类型列表请求数据
+        .then(function (response) {
+            this.cardNumberTypes = response.data.list;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

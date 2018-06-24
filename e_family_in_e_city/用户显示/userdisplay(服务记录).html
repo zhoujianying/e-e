@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../style/public.css">
+  </head>
+  <body class="body">
+    <div id='app'>
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>服务记录</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">上门日期:</span>
+                            <div class="inputBox">
+                                <el-date-picker v-model="doorDate" type="date" placeholder="选择日期"></el-date-picker> 
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <el-button type="primary" @click='handleServiceRecord'>查 询</el-button>          
+                        </div>
+                    </el-col>
+                </el-row>       
+            </div>
+            <div style="width: 100%;height: 1px; background: #ebeef5;margin-bottom: 20px;margin-top: -20px"></div>
+            <div v-if='table'>
+                <template>
+                    <el-table :data="accountRecord.tableData"  border  style="width: 100%">
+                        <el-table-column prop="date" label="房产地址"></el-table-column>
+                        <el-table-column prop="name" label="服务日期"></el-table-column>
+                        <el-table-column prop="province" label="订单编号"></el-table-column>
+                        <el-table-column prop="city" label="城市"></el-table-column>
+                        <el-table-column prop="address" label="服务站"></el-table-column>
+                        <el-table-column prop="zip" label="多能工"></el-table-column>
+                        <el-table-column prop="zip" label="评价"></el-table-column>
+                        <el-table-column prop="zip" label="操作">
+                            <template slot-scope="scope">
+                                <el-button type="text" size="small">查看</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>                       
+            </div>
+        </el-card>       
+    </div>   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+            doorDate:'',    //上门日期
+            table:false           
+        }
+      },
+      methods: {
+        handleServiceRecord:function(){
+            this.table = true
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title> 
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./style/public.css">
+  </head>
+  <body class="body">
+    <h2 style="font-weight: 400">县区创建</h2>
+    <div id='app'>
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>新建街道</span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">城市:</span>
+                            <div class="inputBox">
+                                <el-select v-model="created.city" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in created.citys"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">县区:</span>
+                            <div class="inputBox">
+                                <el-select v-model="created.conty" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in created.contys"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">街道名称:</span>
+                            <div class="inputBox">
+                                <el-input v-model="created.street" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">街道状态:</span>
+                            <div class="inputBox">
+                                <el-select v-model="created.streetStaut" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in created.streetStauts"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="16">
+                        <div class="grid-content bg-purple" style="display:flex; justify-content: flex-end;">
+                            <el-button type="primary" @click='handleQuery'>保存</el-button>
+                        </div>
+                    </el-col>
+                </el-row>
+            </div>
+        </el-card> 
+        <!-- 街道修改 -->
+        <el-card class="box-card" style="margin-top: 20px">
+            <div slot="header" class="clearfix">
+                <span>街道修改</span>
+            </div>
+            <div>
+                <el-row :gutter="20">                  
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">街道编码:</span>
+                            <div class="inputBox">
+                                <el-input disabled v-model="edit.streetCode" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">城市:</span>
+                            <div class="inputBox">
+                                <el-select disabled v-model="edit.city" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in edit.citys"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">县区:</span>
+                            <div class="inputBox">
+                                <el-select v-model="edit.conty" placeholder="请选择">
+                                    <el-option
+                                        v-for="item in edit.contys"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">街道:</span>
+                            <div class="inputBox">
+                                <el-input v-model="edit.street" placeholder="请输入内容"></el-input>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <span class="laber">街道状态:</span>
+                            <div class="inputBox">
+                                    <el-select v-model="edit.streetStaut" placeholder="请选择">
+                                        <el-option
+                                            v-for="item in edit.streetStauts"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                            </div>                   
+                        </div>
+                    </el-col>
+                    <el-col :span="24">
+                        <div class="grid-content bg-purple" style="display:flex; justify-content: flex-end;">
+                            <el-button type="primary" @click='handleQueryEdit'>保存</el-button>
+                        </div>
+                    </el-col>              
+                </el-row>       
+            </div>
+        </el-card> 
+    </div>
+   
+  </body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { 
+           created:{
+            city:'',  //城市 
+            citys:[],      //城市下拉列表数据
+            conty:'',    //县区名称
+            contys:[],      //县区下拉列表数据  
+            street:'',       //街道名称
+            streetStaut:'',       //街道状态
+            streetStauts:'',          //街道状态下拉列表数据
+           },
+           edit:{
+            streetCode:'',   // 街道编码
+            city:'',  //城市
+            citys:[],      //城市下拉列表数据
+            conty:'',   //县区
+            contys:'',        //县区下拉列表数据
+            street:'',         //街道
+            streetStaut:'',       //街道状态
+            streetStauts:'',          //街道状态下拉列表数据
+           }
+        }
+      },
+      methods: {
+        handleQuery:function(){       //新建街道保存
+
+        },
+        handleQueryEdit:function(){           //编辑街道保存
+
+        }
+      },
+      mounted:function(){
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+    })
+  </script>
+</html>
